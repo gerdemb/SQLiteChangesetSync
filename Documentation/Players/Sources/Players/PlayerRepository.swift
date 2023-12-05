@@ -85,51 +85,6 @@ public struct PlayerRepository {
     }
 }
 
-// MARK: - Database Configuration
-
-extension PlayerRepository {
-    private static let sqlLogger = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "SQL")
-    
-    /// Returns a database configuration suited for `PlayerRepository`.
-    ///
-    /// SQL statements are logged if the `SQL_TRACE` environment variable
-    /// is set.
-    ///
-    /// - parameter base: A base configuration.
-    public static func makeConfiguration(_ base: Configuration = Configuration()) -> Configuration {
-        var config = base
-        
-        // An opportunity to add required custom SQL functions or
-        // collations, if needed:
-        // config.prepareDatabase { db in
-        //     db.add(function: ...)
-        // }
-        
-        // Log SQL statements if the `SQL_TRACE` environment variable is set.
-        // See <https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/database/trace(options:_:)>
-        if ProcessInfo.processInfo.environment["SQL_TRACE"] != nil {
-            config.prepareDatabase { db in
-                db.trace {
-                    // It's ok to log statements publicly. Sensitive
-                    // information (statement arguments) are not logged
-                    // unless config.publicStatementArguments is set
-                    // (see below).
-                    os_log("%{public}@", log: sqlLogger, type: .debug, String(describing: $0))
-                }
-            }
-        }
-        
-#if DEBUG
-        // Protect sensitive information by enabling verbose debugging in
-        // DEBUG builds only.
-        // See <https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/configuration/publicstatementarguments>
-        config.publicStatementArguments = true
-#endif
-        
-        return config
-    }
-}
-
 // MARK: - Database Access: Writes
 // The write methods execute invariant-preserving database transactions.
 // In this demo repository, they are pretty simple.
