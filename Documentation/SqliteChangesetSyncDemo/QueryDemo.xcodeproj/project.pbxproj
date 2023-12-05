@@ -19,13 +19,13 @@
 		56519DB7274EAFD700ED16D8 /* DatabaseButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519DB6274EAFD700ED16D8 /* DatabaseButtons.swift */; };
 		56519DC0274FC3F700ED16D8 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 56519DBF274FC3F700ED16D8 /* GRDB */; };
 		56519DC2274FC44500ED16D8 /* GRDBQuery in Frameworks */ = {isa = PBXBuildFile; productRef = 56519DC1274FC44500ED16D8 /* GRDBQuery */; };
-		56F8A189273802970011ACBE /* QueryDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A188273802970011ACBE /* QueryDemoApp.swift */; };
+		56F8A189273802970011ACBE /* SqliteChangesetSyncDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A188273802970011ACBE /* SqliteChangesetSyncDemoApp.swift */; };
 		56F8A18B273802970011ACBE /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A18A273802970011ACBE /* AppView.swift */; };
 		56F8A18D273802980011ACBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56F8A18C273802980011ACBE /* Assets.xcassets */; };
 		56F8A190273802980011ACBE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56F8A18F273802980011ACBE /* Preview Assets.xcassets */; };
-		56F8A19A273802980011ACBE /* QueryDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A199273802980011ACBE /* QueryDemoTests.swift */; };
-		56F8A1A4273802980011ACBE /* QueryDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A3273802980011ACBE /* QueryDemoUITests.swift */; };
-		56F8A1A6273802980011ACBE /* QueryDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A5273802980011ACBE /* QueryDemoUITestsLaunchTests.swift */; };
+		56F8A19A273802980011ACBE /* SqliteChangesetSyncDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A199273802980011ACBE /* SqliteChangesetSyncDemoTests.swift */; };
+		56F8A1A4273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A3273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift */; };
+		56F8A1A6273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A5273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift */; };
 		56F8A1BA273803BB0011ACBE /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 56F8A1B9273803BB0011ACBE /* GRDB */; };
 		8A54AEC82B1F50BF001B4541 /* GRDBQuery in Frameworks */ = {isa = PBXBuildFile; productRef = 8A54AEC72B1F50BF001B4541 /* GRDBQuery */; };
 /* End PBXBuildFile section */
@@ -61,15 +61,15 @@
 		56519DBA274EC7C300ED16D8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		56519DBD274FC3DA00ED16D8 /* GRDBQuery */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GRDBQuery; path = ../..; sourceTree = "<group>"; };
 		56F8A185273802970011ACBE /* QueryDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QueryDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		56F8A188273802970011ACBE /* QueryDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryDemoApp.swift; sourceTree = "<group>"; };
+		56F8A188273802970011ACBE /* SqliteChangesetSyncDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoApp.swift; sourceTree = "<group>"; };
 		56F8A18A273802970011ACBE /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		56F8A18C273802980011ACBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56F8A18F273802980011ACBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		56F8A195273802980011ACBE /* QueryDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QueryDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		56F8A199273802980011ACBE /* QueryDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryDemoTests.swift; sourceTree = "<group>"; };
+		56F8A199273802980011ACBE /* SqliteChangesetSyncDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoTests.swift; sourceTree = "<group>"; };
 		56F8A19F273802980011ACBE /* QueryDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QueryDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		56F8A1A3273802980011ACBE /* QueryDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryDemoUITests.swift; sourceTree = "<group>"; };
-		56F8A1A5273802980011ACBE /* QueryDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		56F8A1A3273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoUITests.swift; sourceTree = "<group>"; };
+		56F8A1A5273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,9 +129,9 @@
 			isa = PBXGroup;
 			children = (
 				56519DBA274EC7C300ED16D8 /* README.md */,
-				56F8A187273802970011ACBE /* QueryDemo */,
-				56F8A198273802980011ACBE /* QueryDemoTests */,
-				56F8A1A2273802980011ACBE /* QueryDemoUITests */,
+				56F8A187273802970011ACBE /* SqliteChangesetSyncDemo */,
+				56F8A198273802980011ACBE /* SqliteChangesetSyncDemoTests */,
+				56F8A1A2273802980011ACBE /* SqliteChangesetSyncDemoUITests */,
 				56F8A186273802970011ACBE /* Products */,
 				56519DBC274FC3DA00ED16D8 /* Packages */,
 				56F8A1B8273803BB0011ACBE /* Frameworks */,
@@ -148,10 +148,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		56F8A187273802970011ACBE /* QueryDemo */ = {
+		56F8A187273802970011ACBE /* SqliteChangesetSyncDemo */ = {
 			isa = PBXGroup;
 			children = (
-				56F8A188273802970011ACBE /* QueryDemoApp.swift */,
+				56F8A188273802970011ACBE /* SqliteChangesetSyncDemoApp.swift */,
 				56089A0A29CF00ED003B3D49 /* Player+App.swift */,
 				56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */,
 				56089A1929CF1B81003B3D49 /* PlayerRepository+SwiftUI.swift */,
@@ -159,7 +159,7 @@
 				56F8A18C273802980011ACBE /* Assets.xcassets */,
 				56F8A18E273802980011ACBE /* Preview Content */,
 			);
-			path = QueryDemo;
+			path = SqliteChangesetSyncDemo;
 			sourceTree = "<group>";
 		};
 		56F8A18E273802980011ACBE /* Preview Content */ = {
@@ -170,21 +170,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		56F8A198273802980011ACBE /* QueryDemoTests */ = {
+		56F8A198273802980011ACBE /* SqliteChangesetSyncDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				56F8A199273802980011ACBE /* QueryDemoTests.swift */,
+				56F8A199273802980011ACBE /* SqliteChangesetSyncDemoTests.swift */,
 			);
-			path = QueryDemoTests;
+			path = SqliteChangesetSyncDemoTests;
 			sourceTree = "<group>";
 		};
-		56F8A1A2273802980011ACBE /* QueryDemoUITests */ = {
+		56F8A1A2273802980011ACBE /* SqliteChangesetSyncDemoUITests */ = {
 			isa = PBXGroup;
 			children = (
-				56F8A1A3273802980011ACBE /* QueryDemoUITests.swift */,
-				56F8A1A5273802980011ACBE /* QueryDemoUITestsLaunchTests.swift */,
+				56F8A1A3273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift */,
+				56F8A1A5273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift */,
 			);
-			path = QueryDemoUITests;
+			path = SqliteChangesetSyncDemoUITests;
 			sourceTree = "<group>";
 		};
 		56F8A1B8273803BB0011ACBE /* Frameworks */ = {
@@ -347,7 +347,7 @@
 				56089A1A29CF1B81003B3D49 /* PlayerRepository+SwiftUI.swift in Sources */,
 				5640153928366D7E00EEA9BC /* PlayerEditionView.swift in Sources */,
 				56089A0B29CF00ED003B3D49 /* Player+App.swift in Sources */,
-				56F8A189273802970011ACBE /* QueryDemoApp.swift in Sources */,
+				56F8A189273802970011ACBE /* SqliteChangesetSyncDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56F8A19A273802980011ACBE /* QueryDemoTests.swift in Sources */,
+				56F8A19A273802980011ACBE /* SqliteChangesetSyncDemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,8 +363,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56F8A1A4273802980011ACBE /* QueryDemoUITests.swift in Sources */,
-				56F8A1A6273802980011ACBE /* QueryDemoUITestsLaunchTests.swift in Sources */,
+				56F8A1A4273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift in Sources */,
+				56F8A1A6273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,7 +515,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"QueryDemo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SqliteChangesetSyncDemo/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -543,7 +543,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"QueryDemo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SqliteChangesetSyncDemo/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
