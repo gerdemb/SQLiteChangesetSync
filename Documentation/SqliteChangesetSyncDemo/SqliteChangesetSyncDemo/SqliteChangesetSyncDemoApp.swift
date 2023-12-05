@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct QueryDemoApp: App {
+struct SqliteChangesetSyncDemoApp: App {
     var body: some Scene {
         WindowGroup {
             AppView()

@@ -7,7 +7,7 @@
 
 import XCTest
 
-class QueryDemoUITestsLaunchTests: XCTestCase {
+class SqliteChangesetSyncDemoUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
