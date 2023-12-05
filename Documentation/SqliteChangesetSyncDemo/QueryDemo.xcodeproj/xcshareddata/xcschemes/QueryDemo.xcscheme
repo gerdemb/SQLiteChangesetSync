@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "56F8A184273802970011ACBE"
-               BuildableName = "QueryDemo.app"
-               BlueprintName = "QueryDemo"
+               BuildableName = "SqliteChangesetSyncDemo.app"
+               BlueprintName = "SqliteChangesetSyncDemo"
                ReferencedContainer = "container:QueryDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "56F8A194273802980011ACBE"
-               BuildableName = "QueryDemoTests.xctest"
-               BlueprintName = "QueryDemoTests"
+               BuildableName = "SqliteChangesetSyncDemoTests.xctest"
+               BlueprintName = "SqliteChangesetSyncDemoTests"
                ReferencedContainer = "container:QueryDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,8 +43,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "56F8A19E273802980011ACBE"
-               BuildableName = "QueryDemoUITests.xctest"
-               BlueprintName = "QueryDemoUITests"
+               BuildableName = "SqliteChangesetSyncDemoUITests.xctest"
+               BlueprintName = "SqliteChangesetSyncDemoUITests"
                ReferencedContainer = "container:QueryDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "56F8A184273802970011ACBE"
-            BuildableName = "QueryDemo.app"
-            BlueprintName = "QueryDemo"
+            BuildableName = "SqliteChangesetSyncDemo.app"
+            BlueprintName = "SqliteChangesetSyncDemo"
             ReferencedContainer = "container:QueryDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -89,8 +89,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "56F8A184273802970011ACBE"
-            BuildableName = "QueryDemo.app"
-            BlueprintName = "QueryDemo"
+            BuildableName = "SqliteChangesetSyncDemo.app"
+            BlueprintName = "SqliteChangesetSyncDemo"
             ReferencedContainer = "container:QueryDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

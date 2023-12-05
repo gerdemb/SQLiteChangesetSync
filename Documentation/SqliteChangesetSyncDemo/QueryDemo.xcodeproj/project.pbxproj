@@ -60,14 +60,14 @@
 		56519DB6274EAFD700ED16D8 /* DatabaseButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseButtons.swift; sourceTree = "<group>"; };
 		56519DBA274EC7C300ED16D8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		56519DBD274FC3DA00ED16D8 /* GRDBQuery */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GRDBQuery; path = ../..; sourceTree = "<group>"; };
-		56F8A185273802970011ACBE /* QueryDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QueryDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SqliteChangesetSyncDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A188273802970011ACBE /* SqliteChangesetSyncDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoApp.swift; sourceTree = "<group>"; };
 		56F8A18A273802970011ACBE /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		56F8A18C273802980011ACBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56F8A18F273802980011ACBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		56F8A195273802980011ACBE /* QueryDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QueryDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		56F8A195273802980011ACBE /* SqliteChangesetSyncDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SqliteChangesetSyncDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A199273802980011ACBE /* SqliteChangesetSyncDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoTests.swift; sourceTree = "<group>"; };
-		56F8A19F273802980011ACBE /* QueryDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QueryDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		56F8A19F273802980011ACBE /* SqliteChangesetSyncDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SqliteChangesetSyncDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A1A3273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoUITests.swift; sourceTree = "<group>"; };
 		56F8A1A5273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,9 +141,9 @@
 		56F8A186273802970011ACBE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				56F8A185273802970011ACBE /* QueryDemo.app */,
-				56F8A195273802980011ACBE /* QueryDemoTests.xctest */,
-				56F8A19F273802980011ACBE /* QueryDemoUITests.xctest */,
+				56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */,
+				56F8A195273802980011ACBE /* SqliteChangesetSyncDemoTests.xctest */,
+				56F8A19F273802980011ACBE /* SqliteChangesetSyncDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -197,9 +197,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		56F8A184273802970011ACBE /* QueryDemo */ = {
+		56F8A184273802970011ACBE /* SqliteChangesetSyncDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 56F8A1A9273802980011ACBE /* Build configuration list for PBXNativeTarget "QueryDemo" */;
+			buildConfigurationList = 56F8A1A9273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemo" */;
 			buildPhases = (
 				56F8A181273802970011ACBE /* Sources */,
 				56F8A182273802970011ACBE /* Frameworks */,
@@ -211,7 +211,7 @@
 				56519DC4274FC44E00ED16D8 /* PBXTargetDependency */,
 				56F8A1B5273803B60011ACBE /* PBXTargetDependency */,
 			);
-			name = QueryDemo;
+			name = SqliteChangesetSyncDemo;
 			packageProductDependencies = (
 				56F8A1B9273803BB0011ACBE /* GRDB */,
 				56519DBF274FC3F700ED16D8 /* GRDB */,
@@ -220,12 +220,12 @@
 				8A54AEC72B1F50BF001B4541 /* GRDBQuery */,
 			);
 			productName = QueryDemo;
-			productReference = 56F8A185273802970011ACBE /* QueryDemo.app */;
+			productReference = 56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		56F8A194273802980011ACBE /* QueryDemoTests */ = {
+		56F8A194273802980011ACBE /* SqliteChangesetSyncDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 56F8A1AC273802980011ACBE /* Build configuration list for PBXNativeTarget "QueryDemoTests" */;
+			buildConfigurationList = 56F8A1AC273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemoTests" */;
 			buildPhases = (
 				56F8A191273802980011ACBE /* Sources */,
 				56F8A192273802980011ACBE /* Frameworks */,
@@ -236,14 +236,14 @@
 			dependencies = (
 				56F8A197273802980011ACBE /* PBXTargetDependency */,
 			);
-			name = QueryDemoTests;
+			name = SqliteChangesetSyncDemoTests;
 			productName = QueryDemoTests;
-			productReference = 56F8A195273802980011ACBE /* QueryDemoTests.xctest */;
+			productReference = 56F8A195273802980011ACBE /* SqliteChangesetSyncDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		56F8A19E273802980011ACBE /* QueryDemoUITests */ = {
+		56F8A19E273802980011ACBE /* SqliteChangesetSyncDemoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 56F8A1AF273802980011ACBE /* Build configuration list for PBXNativeTarget "QueryDemoUITests" */;
+			buildConfigurationList = 56F8A1AF273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemoUITests" */;
 			buildPhases = (
 				56F8A19B273802980011ACBE /* Sources */,
 				56F8A19C273802980011ACBE /* Frameworks */,
@@ -254,9 +254,9 @@
 			dependencies = (
 				56F8A1A1273802980011ACBE /* PBXTargetDependency */,
 			);
-			name = QueryDemoUITests;
+			name = SqliteChangesetSyncDemoUITests;
 			productName = QueryDemoUITests;
-			productReference = 56F8A19F273802980011ACBE /* QueryDemoUITests.xctest */;
+			productReference = 56F8A19F273802980011ACBE /* SqliteChangesetSyncDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -299,9 +299,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				56F8A184273802970011ACBE /* QueryDemo */,
-				56F8A194273802980011ACBE /* QueryDemoTests */,
-				56F8A19E273802980011ACBE /* QueryDemoUITests */,
+				56F8A184273802970011ACBE /* SqliteChangesetSyncDemo */,
+				56F8A194273802980011ACBE /* SqliteChangesetSyncDemoTests */,
+				56F8A19E273802980011ACBE /* SqliteChangesetSyncDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -377,12 +377,12 @@
 		};
 		56F8A197273802980011ACBE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 56F8A184273802970011ACBE /* QueryDemo */;
+			target = 56F8A184273802970011ACBE /* SqliteChangesetSyncDemo */;
 			targetProxy = 56F8A196273802980011ACBE /* PBXContainerItemProxy */;
 		};
 		56F8A1A1273802980011ACBE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 56F8A184273802970011ACBE /* QueryDemo */;
+			target = 56F8A184273802970011ACBE /* SqliteChangesetSyncDemo */;
 			targetProxy = 56F8A1A0273802980011ACBE /* PBXContainerItemProxy */;
 		};
 		56F8A1B5273803B60011ACBE /* PBXTargetDependency */ = {
@@ -668,7 +668,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		56F8A1A9273802980011ACBE /* Build configuration list for PBXNativeTarget "QueryDemo" */ = {
+		56F8A1A9273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56F8A1AA273802980011ACBE /* Debug */,
@@ -677,7 +677,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		56F8A1AC273802980011ACBE /* Build configuration list for PBXNativeTarget "QueryDemoTests" */ = {
+		56F8A1AC273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56F8A1AD273802980011ACBE /* Debug */,
@@ -686,7 +686,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		56F8A1AF273802980011ACBE /* Build configuration list for PBXNativeTarget "QueryDemoUITests" */ = {
+		56F8A1AF273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56F8A1B0273802980011ACBE /* Debug */,
