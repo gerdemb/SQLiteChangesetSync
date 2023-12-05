@@ -17,7 +17,7 @@
                BlueprintIdentifier = "56F8A184273802970011ACBE"
                BuildableName = "SqliteChangesetSyncDemo.app"
                BlueprintName = "SqliteChangesetSyncDemo"
-               ReferencedContainer = "container:QueryDemo.xcodeproj">
+               ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "56F8A194273802980011ACBE"
                BuildableName = "SqliteChangesetSyncDemoTests.xctest"
                BlueprintName = "SqliteChangesetSyncDemoTests"
-               ReferencedContainer = "container:QueryDemo.xcodeproj">
+               ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "56F8A19E273802980011ACBE"
                BuildableName = "SqliteChangesetSyncDemoUITests.xctest"
                BlueprintName = "SqliteChangesetSyncDemoUITests"
-               ReferencedContainer = "container:QueryDemo.xcodeproj">
+               ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -67,7 +67,7 @@
             BlueprintIdentifier = "56F8A184273802970011ACBE"
             BuildableName = "SqliteChangesetSyncDemo.app"
             BlueprintName = "SqliteChangesetSyncDemo"
-            ReferencedContainer = "container:QueryDemo.xcodeproj">
+            ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -91,7 +91,7 @@
             BlueprintIdentifier = "56F8A184273802970011ACBE"
             BuildableName = "SqliteChangesetSyncDemo.app"
             BlueprintName = "SqliteChangesetSyncDemo"
-            ReferencedContainer = "container:QueryDemo.xcodeproj">
+            ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
