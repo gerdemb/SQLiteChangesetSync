@@ -11,11 +11,18 @@ let package = Package(
             name: "SqliteChangesetSync",
             targets: ["SqliteChangesetSync"]),
     ],
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/groue/GRDB.swift.git", from: "6.10.0"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "SqliteChangesetSync"),
+            name: "SqliteChangesetSync",
+            dependencies: [
+                .product(name: "GRDB", package: "GRDB.swift"),
+            ]),
         .testTarget(
             name: "SqliteChangesetSyncTests",
             dependencies: ["SqliteChangesetSync"]),
