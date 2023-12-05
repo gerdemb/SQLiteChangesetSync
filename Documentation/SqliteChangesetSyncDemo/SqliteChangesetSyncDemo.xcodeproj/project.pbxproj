@@ -26,8 +26,6 @@
 		56F8A19A273802980011ACBE /* SqliteChangesetSyncDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A199273802980011ACBE /* SqliteChangesetSyncDemoTests.swift */; };
 		56F8A1A4273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A3273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift */; };
 		56F8A1A6273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A5273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift */; };
-		56F8A1BA273803BB0011ACBE /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 56F8A1B9273803BB0011ACBE /* GRDB */; };
-		8A54AEC82B1F50BF001B4541 /* GRDBQuery in Frameworks */ = {isa = PBXBuildFile; productRef = 8A54AEC72B1F50BF001B4541 /* GRDBQuery */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,9 +76,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56519DC0274FC3F700ED16D8 /* GRDB in Frameworks */,
-				56F8A1BA273803BB0011ACBE /* GRDB in Frameworks */,
 				56519DC2274FC44500ED16D8 /* GRDBQuery in Frameworks */,
-				8A54AEC82B1F50BF001B4541 /* GRDBQuery in Frameworks */,
 				561F2B5929E2C2A900CB7125 /* Players in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,11 +209,9 @@
 			);
 			name = SqliteChangesetSyncDemo;
 			packageProductDependencies = (
-				56F8A1B9273803BB0011ACBE /* GRDB */,
 				56519DBF274FC3F700ED16D8 /* GRDB */,
 				56519DC1274FC44500ED16D8 /* GRDBQuery */,
 				561F2B5829E2C2A900CB7125 /* Players */,
-				8A54AEC72B1F50BF001B4541 /* GRDBQuery */,
 			);
 			productName = QueryDemo;
 			productReference = 56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */;
@@ -737,15 +731,6 @@
 		56F8A1B4273803B60011ACBE /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GRDB;
-		};
-		56F8A1B9273803BB0011ACBE /* GRDB */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GRDB;
-		};
-		8A54AEC72B1F50BF001B4541 /* GRDBQuery */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8A54AEC62B1F50BF001B4541 /* XCRemoteSwiftPackageReference "GRDBQuery" */;
-			productName = GRDBQuery;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
