@@ -69,7 +69,7 @@ public struct PlayerRepository {
             // Create a table
             // See <https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/databaseschema>
             try db.create(table: "player") { t in
-                t.autoIncrementedPrimaryKey("id")
+                t.primaryKey("uuid", .text)
                 t.column("name", .text).notNull()
                 t.column("score", .integer).notNull()
                 t.column("photoID", .integer).notNull()
@@ -157,9 +157,9 @@ extension PlayerRepository {
     }
     
     /// Delete a player.
-    public func deletePlayer(_ id: Int64) throws {
+    public func deletePlayer(_ uuid: String) throws {
         try dbWriter.write { db in
-            _ = try Player.deleteOne(db, key: id)
+            _ = try Player.deleteOne(db, key: uuid)
         }
     }
 }

@@ -16,8 +16,8 @@ struct PlayerEditionView: View {
     
     @State var gonePlayerAlertPresented = false
     
-    init(id: Int64) {
-        _playerPresence = Query(PlayerPresenceRequest(id: id))
+    init(uuid: String) {
+        _playerPresence = Query(PlayerPresenceRequest(uuid: uuid))
     }
     
     var body: some View {
@@ -68,11 +68,11 @@ struct PlayerEditionView: View {
 private struct PlayerPresenceRequest: Queryable {
     static var defaultValue: PlayerPresence { .missing }
     
-    var id: Int64
-    
+    var uuid: String
+
     func publisher(in playerRepository: PlayerRepository) -> AnyPublisher<PlayerPresence, Error> {
         ValueObservation
-            .tracking(Player.filter(key: id).fetchOne)
+            .tracking(Player.filter(key: uuid).fetchOne)
             .publisher(in: playerRepository.reader, scheduling: .immediate)
             // Use scan in order to detect the three cases of player presence
             .scan(.missing) { (previous, player) in
@@ -120,12 +120,14 @@ private enum PlayerPresence {
 }
 
 struct PlayerEditionView_Previews: PreviewProvider {
+    static let uuid = UUID().uuidString
+
     static var previews: some View {
-        PlayerEditionView(id: 1)
-            .environment(\.playerRepository, .populated(playerId: 1))
+        PlayerEditionView(uuid: uuid)
+            .environment(\.playerRepository, .populated(playerUUID: uuid))
             .previewDisplayName("Existing player")
         
-        PlayerEditionView(id: -1)
+        PlayerEditionView(uuid: "")
             .environment(\.playerRepository, .empty())
             .previewDisplayName("Missing player")
     }

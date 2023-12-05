@@ -1,29 +1,30 @@
 import GRDB
+import Foundation
 
 // Equatable for testability
 /// A player.
 public struct Player: Codable, Equatable {
-    private(set) public var id: Int64?
+    private(set) public var uuid: String
     public var name: String
     public var score: Int
     public var photoID: Int
     
     public init(
-        id: Int64? = nil,
+        uuid: String? = nil,
         name: String,
         score: Int,
         photoID: Int)
     {
-        self.id = id
+        if let uuid = uuid {
+            self.uuid = uuid
+        } else {
+            self.uuid = UUID().uuidString
+        }
         self.name = name
         self.score = score
         self.photoID = photoID
     }
 }
 
-extension Player: FetchableRecord, MutablePersistableRecord {
-    // Update auto-incremented id upon successful insertion
-    public mutating func didInsert(_ inserted: InsertionSuccess) {
-        id = inserted.rowID
-    }
+extension Player: FetchableRecord, PersistableRecord {
 }

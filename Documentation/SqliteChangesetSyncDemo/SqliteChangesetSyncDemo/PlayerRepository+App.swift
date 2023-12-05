@@ -57,9 +57,9 @@ extension PlayerRepository {
     /// for previews and tests.
     ///
     /// - parameter playerId: The ID of the inserted player.
-    static func populated(playerId: Int64? = nil) -> PlayerRepository {
+    static func populated(playerUUID: String? = nil) -> PlayerRepository {
         let repo = self.empty()
-        _ = try! repo.insert(Player.makeRandom(id: playerId))
+        _ = try! repo.insert(Player.makeRandom(uuid: playerUUID))
         return repo
     }
 }

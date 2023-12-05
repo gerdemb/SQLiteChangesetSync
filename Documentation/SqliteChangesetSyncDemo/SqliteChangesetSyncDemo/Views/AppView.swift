@@ -6,10 +6,11 @@ import SwiftUI
 /// The main application view
 struct AppView: View {
     @Environment(\.playerRepository) private var playerRepository
-
+    
     /// A helper `Identifiable` type that can feed SwiftUI `sheet(item:onDismiss:content:)`
     private struct EditedPlayer: Identifiable {
-        var id: Int64
+        var id: String { return uuid }
+        var uuid: String
     }
     
     @Query(PlayerRequest())
@@ -21,15 +22,13 @@ struct AppView: View {
         NavigationView {
             VStack {
                 if !players.isEmpty {
-                    ForEach(players, id: \.id) { player in
-                        if let id = player.id {
-                            PlayerView(
-                                player: player,
-                                editAction: { editPlayer(id: id) },
-                                deleteAction: { try? deletePlayer(id: id) }
-                            )
-                            .padding(.vertical)
-                        }
+                    ForEach(players, id: \.uuid) { player in
+                        PlayerView(
+                            player: player,
+                            editAction: { editPlayer(uuid: player.uuid) },
+                            deleteAction: { try? deletePlayer(uuid: player.uuid) }
+                        )
+                        .padding(.vertical)
                     }
                 } else {
                     PlayerView(player: .placeholder)
@@ -41,7 +40,7 @@ struct AppView: View {
             }
             .padding(.horizontal)
             .sheet(item: $editedPlayer) { player in
-                PlayerEditionView(id: player.id)
+                PlayerEditionView(uuid: player.uuid)
             }
             .navigationTitle("@Query Demo")
         }
@@ -56,12 +55,12 @@ struct AppView: View {
         .informationBox()
     }
     
-    private func editPlayer(id: Int64) {
-        editedPlayer = EditedPlayer(id: id)
+    private func editPlayer(uuid: String) {
+        editedPlayer = EditedPlayer(uuid: uuid)
     }
     
-    private func deletePlayer(id: Int64) throws {
-        try playerRepository.deletePlayer(id)
+    private func deletePlayer(uuid: String) throws {
+        try playerRepository.deletePlayer(uuid)
     }
 }
 
