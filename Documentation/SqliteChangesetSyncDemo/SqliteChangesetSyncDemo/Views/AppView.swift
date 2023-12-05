@@ -5,6 +5,8 @@ import SwiftUI
 
 /// The main application view
 struct AppView: View {
+    @Environment(\.playerRepository) private var playerRepository
+
     /// A helper `Identifiable` type that can feed SwiftUI `sheet(item:onDismiss:content:)`
     private struct EditedPlayer: Identifiable {
         var id: Int64
@@ -20,8 +22,14 @@ struct AppView: View {
             VStack {
                 if !players.isEmpty {
                     ForEach(players, id: \.id) { player in
-                        PlayerView(player: player, editAction: { editPlayer(id: player.id!) })
+                        if let id = player.id {
+                            PlayerView(
+                                player: player,
+                                editAction: { editPlayer(id: id) },
+                                deleteAction: { try? deletePlayer(id: id) }
+                            )
                             .padding(.vertical)
+                        }
                     }
                 } else {
                     PlayerView(player: .placeholder)
@@ -50,6 +58,10 @@ struct AppView: View {
     
     private func editPlayer(id: Int64) {
         editedPlayer = EditedPlayer(id: id)
+    }
+    
+    private func deletePlayer(id: Int64) throws {
+        try playerRepository.deletePlayer(id)
     }
 }
 

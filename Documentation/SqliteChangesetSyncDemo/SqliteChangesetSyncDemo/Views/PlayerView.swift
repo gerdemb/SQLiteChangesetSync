@@ -5,6 +5,7 @@ struct PlayerView: View {
     @Environment(\.redactionReasons) var redactionReasons
     var player: Player
     var editAction: (() -> Void)?
+    var deleteAction: (() -> Void)?
     
     var body: some View {
         HStack {
@@ -19,6 +20,9 @@ struct PlayerView: View {
             
             if let editAction {
                 Button("Edit", action: editAction)
+            }
+            if let deleteAction {
+                Button("Delete", action: deleteAction)
             }
         }
     }

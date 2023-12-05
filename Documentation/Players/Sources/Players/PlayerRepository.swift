@@ -155,6 +155,13 @@ extension PlayerRepository {
             _ = try Player.deleteAll(db)
         }
     }
+    
+    /// Delete a player.
+    public func deletePlayer(_ id: Int64) throws {
+        try dbWriter.write { db in
+            _ = try Player.deleteOne(db, key: id)
+        }
+    }
 }
 
 // MARK: - Database Access: Reads
