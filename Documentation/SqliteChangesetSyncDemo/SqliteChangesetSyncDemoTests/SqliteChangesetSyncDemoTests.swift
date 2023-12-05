@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import QueryDemo
+@testable import SqliteChangesetSyncDemo
 
 class SqliteChangesetSyncDemoTests: XCTestCase {
 
