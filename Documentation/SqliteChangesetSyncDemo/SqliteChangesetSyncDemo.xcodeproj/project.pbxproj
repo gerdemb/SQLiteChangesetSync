@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,6 +26,7 @@
 		56F8A19A273802980011ACBE /* SqliteChangesetSyncDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A199273802980011ACBE /* SqliteChangesetSyncDemoTests.swift */; };
 		56F8A1A4273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A3273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift */; };
 		56F8A1A6273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A5273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift */; };
+		8AF9E3682B1F64D200A9A28B /* SqliteChangesetSync in Frameworks */ = {isa = PBXBuildFile; productRef = 8AF9E3672B1F64D200A9A28B /* SqliteChangesetSync */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +58,6 @@
 		56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerRepository+App.swift"; sourceTree = "<group>"; };
 		56519DB6274EAFD700ED16D8 /* DatabaseButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseButtons.swift; sourceTree = "<group>"; };
 		56519DBA274EC7C300ED16D8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		56519DBD274FC3DA00ED16D8 /* GRDBQuery */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GRDBQuery; path = ../..; sourceTree = "<group>"; };
 		56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SqliteChangesetSyncDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A188273802970011ACBE /* SqliteChangesetSyncDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteChangesetSyncDemoApp.swift; sourceTree = "<group>"; };
 		56F8A18A273802970011ACBE /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
@@ -75,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AF9E3682B1F64D200A9A28B /* SqliteChangesetSync in Frameworks */,
 				56519DC0274FC3F700ED16D8 /* GRDB in Frameworks */,
 				56519DC2274FC44500ED16D8 /* GRDBQuery in Frameworks */,
 				561F2B5929E2C2A900CB7125 /* Players in Frameworks */,
@@ -115,7 +116,6 @@
 		56519DBC274FC3DA00ED16D8 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				56519DBD274FC3DA00ED16D8 /* GRDBQuery */,
 				56089A0729CEFF5E003B3D49 /* Players */,
 			);
 			name = Packages;
@@ -212,6 +212,7 @@
 				56519DBF274FC3F700ED16D8 /* GRDB */,
 				56519DC1274FC44500ED16D8 /* GRDBQuery */,
 				561F2B5829E2C2A900CB7125 /* Players */,
+				8AF9E3672B1F64D200A9A28B /* SqliteChangesetSync */,
 			);
 			productName = QueryDemo;
 			productReference = 56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */;
@@ -288,6 +289,7 @@
 			packageReferences = (
 				56519DBE274FC3F700ED16D8 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				8A54AEC62B1F50BF001B4541 /* XCRemoteSwiftPackageReference "GRDBQuery" */,
+				8AF9E3662B1F64D200A9A28B /* XCLocalSwiftPackageReference "../.." */,
 			);
 			productRefGroup = 56F8A186273802970011ACBE /* Products */;
 			projectDirPath = "";
@@ -691,6 +693,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		8AF9E3662B1F64D200A9A28B /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		56519DBE274FC3F700ED16D8 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -731,6 +740,10 @@
 		56F8A1B4273803B60011ACBE /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GRDB;
+		};
+		8AF9E3672B1F64D200A9A28B /* SqliteChangesetSync */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SqliteChangesetSync;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
