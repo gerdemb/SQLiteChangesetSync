@@ -27,6 +27,7 @@
 		56F8A1A4273802980011ACBE /* QueryDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A3273802980011ACBE /* QueryDemoUITests.swift */; };
 		56F8A1A6273802980011ACBE /* QueryDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A5273802980011ACBE /* QueryDemoUITestsLaunchTests.swift */; };
 		56F8A1BA273803BB0011ACBE /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 56F8A1B9273803BB0011ACBE /* GRDB */; };
+		8A54AEC82B1F50BF001B4541 /* GRDBQuery in Frameworks */ = {isa = PBXBuildFile; productRef = 8A54AEC72B1F50BF001B4541 /* GRDBQuery */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 				56519DC0274FC3F700ED16D8 /* GRDB in Frameworks */,
 				56F8A1BA273803BB0011ACBE /* GRDB in Frameworks */,
 				56519DC2274FC44500ED16D8 /* GRDBQuery in Frameworks */,
+				8A54AEC82B1F50BF001B4541 /* GRDBQuery in Frameworks */,
 				561F2B5929E2C2A900CB7125 /* Players in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,6 +217,7 @@
 				56519DBF274FC3F700ED16D8 /* GRDB */,
 				56519DC1274FC44500ED16D8 /* GRDBQuery */,
 				561F2B5829E2C2A900CB7125 /* Players */,
+				8A54AEC72B1F50BF001B4541 /* GRDBQuery */,
 			);
 			productName = QueryDemo;
 			productReference = 56F8A185273802970011ACBE /* QueryDemo.app */;
@@ -290,6 +293,7 @@
 			mainGroup = 56F8A17C273802970011ACBE;
 			packageReferences = (
 				56519DBE274FC3F700ED16D8 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				8A54AEC62B1F50BF001B4541 /* XCRemoteSwiftPackageReference "GRDBQuery" */,
 			);
 			productRefGroup = 56F8A186273802970011ACBE /* Products */;
 			projectDirPath = "";
@@ -702,6 +706,14 @@
 				minimumVersion = 6.5.0;
 			};
 		};
+		8A54AEC62B1F50BF001B4541 /* XCRemoteSwiftPackageReference "GRDBQuery" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDBQuery";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -729,6 +741,11 @@
 		56F8A1B9273803BB0011ACBE /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GRDB;
+		};
+		8A54AEC72B1F50BF001B4541 /* GRDBQuery */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A54AEC62B1F50BF001B4541 /* XCRemoteSwiftPackageReference "GRDBQuery" */;
+			productName = GRDBQuery;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
