@@ -11,27 +11,25 @@ struct AppView: View {
     }
     
     @Query(PlayerRequest())
-    private var player: Player?
+    private var players: [Player]
     
     @State private var editedPlayer: EditedPlayer?
     
     var body: some View {
         NavigationView {
             VStack {
-                if let player, let id = player.id {
-                    PlayerView(player: player, editAction: { editPlayer(id: id) })
-                        .padding(.vertical)
-                    
-                    Spacer()
-                    populatedFooter(id: id)
+                if !players.isEmpty {
+                    ForEach(players, id: \.id) { player in
+                        PlayerView(player: player, editAction: { editPlayer(id: player.id!) })
+                            .padding(.vertical)
+                    }
                 } else {
                     PlayerView(player: .placeholder)
                         .padding(.vertical)
                         .redacted(reason: .placeholder)
-                    
-                    Spacer()
-                    emptyFooter()
                 }
+                Spacer()
+                footer()
             }
             .padding(.horizontal)
             .sheet(item: $editedPlayer) { player in
@@ -41,35 +39,11 @@ struct AppView: View {
         }
     }
     
-    private func emptyFooter() -> some View {
+    private func footer() -> some View {
         VStack {
             Text("The demo application observes the database and displays information about the player.")
                 .informationStyle()
-            
             CreatePlayerButton("Create a Player")
-        }
-        .informationBox()
-    }
-    
-    private func populatedFooter(id: Int64) -> some View {
-        VStack(spacing: 10) {
-            Text("What if another application component deletes the player at the most unexpected moment?")
-                .informationStyle()
-            DeletePlayersButton("Delete Player")
-            
-            Spacer().frame(height: 10)
-            Text("What if the player is deleted soon after the Edit button is hit?")
-                .informationStyle()
-            DeletePlayersButton("Delete After Editing", after: {
-                editPlayer(id: id)
-            })
-            
-            Spacer().frame(height: 10)
-            Text("What if the player is deleted right before the Edit button is hit?")
-                .informationStyle()
-            DeletePlayersButton("Delete Before Editing", before: {
-                editPlayer(id: id)
-            })
         }
         .informationBox()
     }
@@ -81,11 +55,11 @@ struct AppView: View {
 
 /// A @Query request that observes the player (any player, actually) in the database
 private struct PlayerRequest: Queryable {
-    static var defaultValue: Player? { nil }
+    static var defaultValue: [Player] { [] }
     
-    func publisher(in playerRepository: PlayerRepository) -> DatabasePublishers.Value<Player?> {
+    func publisher(in playerRepository: PlayerRepository) -> DatabasePublishers.Value<[Player]> {
         ValueObservation
-            .tracking(Player.fetchOne)
+            .tracking(Player.fetchAll)
             .publisher(in: playerRepository.reader, scheduling: .immediate)
     }
 }
