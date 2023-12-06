@@ -3,7 +3,7 @@ import SQLiteChangesetSync
 import Players
 
 @main
-struct SqliteChangesetSyncDemoApp: App {
+struct SQLiteChangesetSyncDemo: App {
     let changsetRepository = { try! ChangesetRepository(DatabaseManager.shared) }()
     let playerRepository = { try! PlayerRepository(DatabaseManager.shared) }()
 
