@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SqliteSessionExtension
+import SQLiteSessionExtension
 
 public class SQLiteSession {
     let session: OpaquePointer

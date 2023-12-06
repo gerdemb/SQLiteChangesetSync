@@ -1,5 +1,5 @@
 import XCTest
-//@testable import SqliteChangesetSync
+//@testable import SQLiteChangesetSync
 
 final class SqliteChangesetSyncTests: XCTestCase {
     func testExample() throws {
