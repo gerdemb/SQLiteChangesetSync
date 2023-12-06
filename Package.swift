@@ -24,7 +24,8 @@ let package = Package(
                 .product(name: "GRDB", package: "GRDB.swift"),
             ],
             cSettings: [
-                .headerSearchPath(".")
+                .headerSearchPath("."),
+                .define("SQLITE_ENABLE_SESSION")
             ]),
         .testTarget(
             name: "SqliteChangesetSyncTests",
