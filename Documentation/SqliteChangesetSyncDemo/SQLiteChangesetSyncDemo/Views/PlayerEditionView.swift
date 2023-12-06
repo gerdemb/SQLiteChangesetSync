@@ -1,7 +1,6 @@
 import Combine
 import GRDB
 import GRDBQuery
-import Players
 import SwiftUI
 
 /// The sheet for player edition.

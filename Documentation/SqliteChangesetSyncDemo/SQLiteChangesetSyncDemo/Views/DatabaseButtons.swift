@@ -1,4 +1,3 @@
-import Players
 import SwiftUI
 
 /// A helper button that creates players in the database

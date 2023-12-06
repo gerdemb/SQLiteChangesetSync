@@ -1,5 +1,4 @@
 import GRDBQuery
-import Players
 import SwiftUI
 
 // MARK: - Give SwiftUI access to the player repository

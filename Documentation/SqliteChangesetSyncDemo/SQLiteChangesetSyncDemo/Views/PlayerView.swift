@@ -1,4 +1,3 @@
-import Players
 import SwiftUI
 
 struct PlayerView: View {

@@ -1,6 +1,5 @@
 import SwiftUI
 import SQLiteChangesetSync
-import Players
 
 @main
 struct SQLiteChangesetSyncDemo: App {

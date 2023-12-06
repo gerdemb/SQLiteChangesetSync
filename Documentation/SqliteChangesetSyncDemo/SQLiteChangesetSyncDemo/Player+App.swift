@@ -1,5 +1,3 @@
-import Players
-
 // Convenience `Player` methods for the app.
 extension Player {
     private static let names = [
