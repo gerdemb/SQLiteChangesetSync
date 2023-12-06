@@ -10,6 +10,8 @@ import GRDB
 import SwiftUI
 
 public struct ChangesetRepository {
+    static let empty = { try! ChangesetRepository(DatabaseQueue()) }
+
     public init(_ dbWriter: some GRDB.DatabaseWriter) throws {
         self.dbWriter = dbWriter
         try migrator.migrate(dbWriter)
@@ -19,10 +21,6 @@ public struct ChangesetRepository {
 
     private var migrator: DatabaseMigrator {
         var migrator = DatabaseMigrator()
-        
-#if DEBUG
-//        migrator.eraseDatabaseOnSchemaChange = true
-#endif
         
         migrator.registerMigration("createChangeset") { db in
             try db.create(table: "changeset") { t in
@@ -57,7 +55,7 @@ public struct ChangesetRepository {
 }
 
 extension ChangesetRepository {
-    static let empty = { try! ChangesetRepository(DatabaseQueue()) }
+    
 }
 
 private struct ChangesetRepositoryKey: EnvironmentKey {
@@ -65,6 +63,7 @@ private struct ChangesetRepositoryKey: EnvironmentKey {
     static let defaultValue = ChangesetRepository.empty()
 }
 
+@available(macOS 10.15, *)
 @available(iOS 13.0, *)
 public extension EnvironmentValues {
     var changesetRepository: ChangesetRepository {

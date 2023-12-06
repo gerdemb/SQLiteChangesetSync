@@ -22,6 +22,9 @@ let package = Package(
             name: "SqliteChangesetSync",
             dependencies: [
                 .product(name: "GRDB", package: "GRDB.swift"),
+            ],
+            cSettings: [
+                .headerSearchPath(".")
             ]),
         .testTarget(
             name: "SqliteChangesetSyncTests",
