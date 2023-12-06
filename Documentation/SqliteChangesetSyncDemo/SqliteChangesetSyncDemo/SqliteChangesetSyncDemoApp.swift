@@ -1,5 +1,5 @@
 import SwiftUI
-import SqliteChangesetSync
+import SQLiteChangesetSync
 import Players
 
 @main

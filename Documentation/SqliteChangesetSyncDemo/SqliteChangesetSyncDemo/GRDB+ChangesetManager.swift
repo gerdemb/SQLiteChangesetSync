@@ -7,16 +7,16 @@
 
 import Foundation
 import GRDB
-import SqliteChangesetSync
+import SQLiteChangesetSync
 
 extension GRDB.DatabaseWriter {
     public func writeWithChangeset<T>(meta: String = "{}", _ updates: (Database) throws -> T) throws -> T {
         try writeWithoutTransaction { db in
             var result: T?
             try db.inTransaction {
-                let session = try SqliteSession(db.sqliteConnection!)
+                let session = try SQLiteSession(db.sqliteConnection!)
                 result = try updates(db)
-                _ = try session.commit(meta: meta)
+//                _ = try session.commit(meta: meta)
                 return .commit
             }
             return result!

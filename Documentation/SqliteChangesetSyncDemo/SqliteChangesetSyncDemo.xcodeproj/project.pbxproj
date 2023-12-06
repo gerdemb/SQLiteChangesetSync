@@ -27,7 +27,7 @@
 		56F8A1A4273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A3273802980011ACBE /* SqliteChangesetSyncDemoUITests.swift */; };
 		56F8A1A6273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A5273802980011ACBE /* SqliteChangesetSyncDemoUITestsLaunchTests.swift */; };
 		8A2443732B2078BE00C76A70 /* GRDB+ChangesetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443722B2078BE00C76A70 /* GRDB+ChangesetManager.swift */; };
-		8AF9E3682B1F64D200A9A28B /* SqliteChangesetSync in Frameworks */ = {isa = PBXBuildFile; productRef = 8AF9E3672B1F64D200A9A28B /* SqliteChangesetSync */; };
+		8A2443762B20BFC700C76A70 /* SQLiteChangesetSync in Frameworks */ = {isa = PBXBuildFile; productRef = 8A2443752B20BFC700C76A70 /* SQLiteChangesetSync */; };
 		8AF9E36C2B1F741800A9A28B /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AF9E3682B1F64D200A9A28B /* SqliteChangesetSync in Frameworks */,
+				8A2443762B20BFC700C76A70 /* SQLiteChangesetSync in Frameworks */,
 				56519DC0274FC3F700ED16D8 /* GRDB in Frameworks */,
 				56519DC2274FC44500ED16D8 /* GRDBQuery in Frameworks */,
 				561F2B5929E2C2A900CB7125 /* Players in Frameworks */,
@@ -218,7 +218,7 @@
 				56519DBF274FC3F700ED16D8 /* GRDB */,
 				56519DC1274FC44500ED16D8 /* GRDBQuery */,
 				561F2B5829E2C2A900CB7125 /* Players */,
-				8AF9E3672B1F64D200A9A28B /* SqliteChangesetSync */,
+				8A2443752B20BFC700C76A70 /* SQLiteChangesetSync */,
 			);
 			productName = QueryDemo;
 			productReference = 56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */;
@@ -295,7 +295,7 @@
 			packageReferences = (
 				56519DBE274FC3F700ED16D8 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				8A54AEC62B1F50BF001B4541 /* XCRemoteSwiftPackageReference "GRDBQuery" */,
-				8AF9E3662B1F64D200A9A28B /* XCLocalSwiftPackageReference "../.." */,
+				8A2443742B20BFC700C76A70 /* XCLocalSwiftPackageReference "../.." */,
 			);
 			productRefGroup = 56F8A186273802970011ACBE /* Products */;
 			projectDirPath = "";
@@ -535,6 +535,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.gerdemb.SqliteChangesetSyncDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/../../Sources/SQLiteSessionExtension";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -563,6 +564,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.gerdemb.SqliteChangesetSyncDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/../../Sources/SQLiteSessionExtension";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -702,7 +704,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		8AF9E3662B1F64D200A9A28B /* XCLocalSwiftPackageReference "../.." */ = {
+		8A2443742B20BFC700C76A70 /* XCLocalSwiftPackageReference "../.." */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../..;
 		};
@@ -749,9 +751,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = GRDB;
 		};
-		8AF9E3672B1F64D200A9A28B /* SqliteChangesetSync */ = {
+		8A2443752B20BFC700C76A70 /* SQLiteChangesetSync */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SqliteChangesetSync;
+			productName = SQLiteChangesetSync;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
