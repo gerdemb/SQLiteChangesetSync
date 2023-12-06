@@ -60,14 +60,14 @@
 		56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerRepository+App.swift"; sourceTree = "<group>"; };
 		56519DB6274EAFD700ED16D8 /* DatabaseButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseButtons.swift; sourceTree = "<group>"; };
 		56519DBA274EC7C300ED16D8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SqliteChangesetSyncDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		56F8A185273802970011ACBE /* SQLiteChangesetSyncDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLiteChangesetSyncDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A188273802970011ACBE /* SQLiteChangesetSyncDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoApp.swift; sourceTree = "<group>"; };
 		56F8A18A273802970011ACBE /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		56F8A18C273802980011ACBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56F8A18F273802980011ACBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		56F8A195273802980011ACBE /* SqliteChangesetSyncDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SqliteChangesetSyncDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		56F8A195273802980011ACBE /* SQLiteChangesetSyncDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SQLiteChangesetSyncDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A199273802980011ACBE /* SQLiteChangesetSyncDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoTests.swift; sourceTree = "<group>"; };
-		56F8A19F273802980011ACBE /* SqliteChangesetSyncDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SqliteChangesetSyncDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		56F8A19F273802980011ACBE /* SQLiteChangesetSyncDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SQLiteChangesetSyncDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A1A3273802980011ACBE /* SQLiteChangesetSyncDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoUITests.swift; sourceTree = "<group>"; };
 		56F8A1A5273802980011ACBE /* SQLiteChangesetSyncDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		8A2443722B2078BE00C76A70 /* GRDB+ChangesetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GRDB+ChangesetManager.swift"; sourceTree = "<group>"; };
@@ -141,9 +141,9 @@
 		56F8A186273802970011ACBE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */,
-				56F8A195273802980011ACBE /* SqliteChangesetSyncDemoTests.xctest */,
-				56F8A19F273802980011ACBE /* SqliteChangesetSyncDemoUITests.xctest */,
+				56F8A185273802970011ACBE /* SQLiteChangesetSyncDemo.app */,
+				56F8A195273802980011ACBE /* SQLiteChangesetSyncDemoTests.xctest */,
+				56F8A19F273802980011ACBE /* SQLiteChangesetSyncDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -199,9 +199,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		56F8A184273802970011ACBE /* SqliteChangesetSyncDemo */ = {
+		56F8A184273802970011ACBE /* SQLiteChangesetSyncDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 56F8A1A9273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemo" */;
+			buildConfigurationList = 56F8A1A9273802980011ACBE /* Build configuration list for PBXNativeTarget "SQLiteChangesetSyncDemo" */;
 			buildPhases = (
 				56F8A181273802970011ACBE /* Sources */,
 				56F8A182273802970011ACBE /* Frameworks */,
@@ -213,7 +213,7 @@
 				56519DC4274FC44E00ED16D8 /* PBXTargetDependency */,
 				56F8A1B5273803B60011ACBE /* PBXTargetDependency */,
 			);
-			name = SqliteChangesetSyncDemo;
+			name = SQLiteChangesetSyncDemo;
 			packageProductDependencies = (
 				56519DBF274FC3F700ED16D8 /* GRDB */,
 				56519DC1274FC44500ED16D8 /* GRDBQuery */,
@@ -221,12 +221,12 @@
 				8A2443752B20BFC700C76A70 /* SQLiteChangesetSync */,
 			);
 			productName = QueryDemo;
-			productReference = 56F8A185273802970011ACBE /* SqliteChangesetSyncDemo.app */;
+			productReference = 56F8A185273802970011ACBE /* SQLiteChangesetSyncDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		56F8A194273802980011ACBE /* SqliteChangesetSyncDemoTests */ = {
+		56F8A194273802980011ACBE /* SQLiteChangesetSyncDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 56F8A1AC273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemoTests" */;
+			buildConfigurationList = 56F8A1AC273802980011ACBE /* Build configuration list for PBXNativeTarget "SQLiteChangesetSyncDemoTests" */;
 			buildPhases = (
 				56F8A191273802980011ACBE /* Sources */,
 				56F8A192273802980011ACBE /* Frameworks */,
@@ -237,14 +237,14 @@
 			dependencies = (
 				56F8A197273802980011ACBE /* PBXTargetDependency */,
 			);
-			name = SqliteChangesetSyncDemoTests;
+			name = SQLiteChangesetSyncDemoTests;
 			productName = QueryDemoTests;
-			productReference = 56F8A195273802980011ACBE /* SqliteChangesetSyncDemoTests.xctest */;
+			productReference = 56F8A195273802980011ACBE /* SQLiteChangesetSyncDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		56F8A19E273802980011ACBE /* SqliteChangesetSyncDemoUITests */ = {
+		56F8A19E273802980011ACBE /* SQLiteChangesetSyncDemoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 56F8A1AF273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemoUITests" */;
+			buildConfigurationList = 56F8A1AF273802980011ACBE /* Build configuration list for PBXNativeTarget "SQLiteChangesetSyncDemoUITests" */;
 			buildPhases = (
 				56F8A19B273802980011ACBE /* Sources */,
 				56F8A19C273802980011ACBE /* Frameworks */,
@@ -255,9 +255,9 @@
 			dependencies = (
 				56F8A1A1273802980011ACBE /* PBXTargetDependency */,
 			);
-			name = SqliteChangesetSyncDemoUITests;
+			name = SQLiteChangesetSyncDemoUITests;
 			productName = QueryDemoUITests;
-			productReference = 56F8A19F273802980011ACBE /* SqliteChangesetSyncDemoUITests.xctest */;
+			productReference = 56F8A19F273802980011ACBE /* SQLiteChangesetSyncDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -301,9 +301,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				56F8A184273802970011ACBE /* SqliteChangesetSyncDemo */,
-				56F8A194273802980011ACBE /* SqliteChangesetSyncDemoTests */,
-				56F8A19E273802980011ACBE /* SqliteChangesetSyncDemoUITests */,
+				56F8A184273802970011ACBE /* SQLiteChangesetSyncDemo */,
+				56F8A194273802980011ACBE /* SQLiteChangesetSyncDemoTests */,
+				56F8A19E273802980011ACBE /* SQLiteChangesetSyncDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -381,12 +381,12 @@
 		};
 		56F8A197273802980011ACBE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 56F8A184273802970011ACBE /* SqliteChangesetSyncDemo */;
+			target = 56F8A184273802970011ACBE /* SQLiteChangesetSyncDemo */;
 			targetProxy = 56F8A196273802980011ACBE /* PBXContainerItemProxy */;
 		};
 		56F8A1A1273802980011ACBE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 56F8A184273802970011ACBE /* SqliteChangesetSyncDemo */;
+			target = 56F8A184273802970011ACBE /* SQLiteChangesetSyncDemo */;
 			targetProxy = 56F8A1A0273802980011ACBE /* PBXContainerItemProxy */;
 		};
 		56F8A1B5273803B60011ACBE /* PBXTargetDependency */ = {
@@ -532,7 +532,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.gerdemb.SqliteChangesetSyncDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.gerdemb.SQLiteChangesetSyncDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/../../Sources/SQLiteSessionExtension";
@@ -561,7 +561,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.gerdemb.SqliteChangesetSyncDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.gerdemb.SQLiteChangesetSyncDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/../../Sources/SQLiteSessionExtension";
@@ -674,7 +674,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		56F8A1A9273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemo" */ = {
+		56F8A1A9273802980011ACBE /* Build configuration list for PBXNativeTarget "SQLiteChangesetSyncDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56F8A1AA273802980011ACBE /* Debug */,
@@ -683,7 +683,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		56F8A1AC273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemoTests" */ = {
+		56F8A1AC273802980011ACBE /* Build configuration list for PBXNativeTarget "SQLiteChangesetSyncDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56F8A1AD273802980011ACBE /* Debug */,
@@ -692,7 +692,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		56F8A1AF273802980011ACBE /* Build configuration list for PBXNativeTarget "SqliteChangesetSyncDemoUITests" */ = {
+		56F8A1AF273802980011ACBE /* Build configuration list for PBXNativeTarget "SQLiteChangesetSyncDemoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56F8A1B0273802980011ACBE /* Debug */,
