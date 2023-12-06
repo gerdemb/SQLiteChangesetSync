@@ -62,7 +62,7 @@ public struct PlayerRepository {
 #if DEBUG
         // Speed up development by nuking the database when migrations change
         // See <https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/migrations#The-eraseDatabaseOnSchemaChange-Option>
-        migrator.eraseDatabaseOnSchemaChange = true
+//        migrator.eraseDatabaseOnSchemaChange = true
 #endif
         
         migrator.registerMigration("createPlayer") { db in

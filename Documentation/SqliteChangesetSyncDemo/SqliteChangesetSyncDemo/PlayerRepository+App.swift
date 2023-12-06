@@ -6,8 +6,7 @@ import Players
 // app, tests, and previews.
 extension PlayerRepository {
     /// The on-disk repository for the application.
-    static let shared = { try! PlayerRepository(DatabaseManager.shared) }()
-    static let empty = { try! PlayerRepository(DatabaseManager.empty()) }
+    static let empty = { try! PlayerRepository(DatabaseQueue()) }
     
     /// Returns an in-memory repository that contains one player,
     /// for previews and tests.
