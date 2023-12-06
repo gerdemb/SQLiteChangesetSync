@@ -97,21 +97,3 @@ extension DatabaseManager {
         return config
     }
 }
-
-// MARK: - Give SwiftUI access to the database manager
-
-// Define a new environment key that grants access to a `DatabaseManager`.
-//
-// The technique is documented at
-// <https://developer.apple.com/documentation/swiftui/environmentkey>.
-private struct DatabaseManagerKey: EnvironmentKey {
-    /// The default appDatabase is an empty in-memory repository.
-    static let defaultValue = DatabaseManager.empty()
-}
-
-extension EnvironmentValues {
-    var dbWriter: GRDB.DatabaseWriter {
-        get { self[DatabaseManagerKey.self] }
-        set { self[DatabaseManagerKey.self] = newValue }
-    }
-}
