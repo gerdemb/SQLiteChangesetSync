@@ -17,7 +17,10 @@ struct PlayerFormView: View {
         do {
             var updatedPlayer = player
             transform(&updatedPlayer.score)
-            try changesetRepository.commit { db in
+            let meta = """
+            { "message": "UPDATE \(updatedPlayer.uuid)" }
+            """
+            try changesetRepository.commit(meta: meta) { db in
                 try updatedPlayer.update(db)
             }
         } catch RecordError.recordNotFound {

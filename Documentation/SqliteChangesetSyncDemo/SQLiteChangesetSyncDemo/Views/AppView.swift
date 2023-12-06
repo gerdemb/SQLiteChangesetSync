@@ -59,7 +59,10 @@ struct AppView: View {
     }
     
     private func deletePlayer(uuid: String) throws {
-        _ = try changesetRepository.commit { db in
+        let meta = """
+        { "message": "DELETE \(uuid)" }
+        """
+        _ = try changesetRepository.commit(meta: meta) { db in
             try Player.deleteOne(db, key: uuid)
         }
     }

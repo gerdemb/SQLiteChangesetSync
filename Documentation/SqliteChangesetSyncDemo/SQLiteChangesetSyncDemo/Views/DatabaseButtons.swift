@@ -12,7 +12,10 @@ struct CreatePlayerButton: View {
     var body: some View {
         Button {
             let player = Player.makeRandom()
-            try! changesetRepository.commit { db in
+            let meta = """
+            { "message": "INSERT \(player.uuid)" }
+            """
+            try! changesetRepository.commit(meta: meta) { db in
                 try player.insert(db)
             }
         } label: {
