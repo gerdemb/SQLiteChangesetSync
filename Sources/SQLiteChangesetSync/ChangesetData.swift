@@ -22,6 +22,9 @@ public struct ChangesetOperation {
 public class ChangesetData {
     let bytes: UnsafeMutableRawPointer
     let length: Int32
+    lazy var data = {
+        Data(bytes: bytes, count: Int(length))
+    }()
     
     init(bytes: UnsafeMutableRawPointer, length: Int32) {
         self.bytes = bytes

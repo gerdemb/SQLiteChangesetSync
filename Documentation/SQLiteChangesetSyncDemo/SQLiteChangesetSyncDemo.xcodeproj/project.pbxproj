@@ -25,7 +25,6 @@
 		56F8A19A273802980011ACBE /* SQLiteChangesetSyncDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A199273802980011ACBE /* SQLiteChangesetSyncDemoTests.swift */; };
 		56F8A1A4273802980011ACBE /* SQLiteChangesetSyncDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A3273802980011ACBE /* SQLiteChangesetSyncDemoUITests.swift */; };
 		56F8A1A6273802980011ACBE /* SQLiteChangesetSyncDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A1A5273802980011ACBE /* SQLiteChangesetSyncDemoUITestsLaunchTests.swift */; };
-		8A2443732B2078BE00C76A70 /* GRDB+ChangesetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443722B2078BE00C76A70 /* GRDB+ChangesetManager.swift */; };
 		8A2443762B20BFC700C76A70 /* SQLiteChangesetSync in Frameworks */ = {isa = PBXBuildFile; productRef = 8A2443752B20BFC700C76A70 /* SQLiteChangesetSync */; };
 		8A24437A2B20C43D00C76A70 /* PlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443782B20C43D00C76A70 /* PlayerRepository.swift */; };
 		8A24437B2B20C43D00C76A70 /* PlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443782B20C43D00C76A70 /* PlayerRepository.swift */; };
@@ -74,7 +73,6 @@
 		56F8A19F273802980011ACBE /* SQLiteChangesetSyncDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SQLiteChangesetSyncDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A1A3273802980011ACBE /* SQLiteChangesetSyncDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoUITests.swift; sourceTree = "<group>"; };
 		56F8A1A5273802980011ACBE /* SQLiteChangesetSyncDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		8A2443722B2078BE00C76A70 /* GRDB+ChangesetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GRDB+ChangesetManager.swift"; sourceTree = "<group>"; };
 		8A2443782B20C43D00C76A70 /* PlayerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRepository.swift; sourceTree = "<group>"; };
 		8A2443792B20C43D00C76A70 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
@@ -160,7 +158,6 @@
 				56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */,
 				56089A1929CF1B81003B3D49 /* PlayerRepository+SwiftUI.swift */,
 				8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */,
-				8A2443722B2078BE00C76A70 /* GRDB+ChangesetManager.swift */,
 				56519D99274E1B9A00ED16D8 /* Views */,
 				8A2443772B20C41200C76A70 /* Players */,
 				56F8A18C273802980011ACBE /* Assets.xcassets */,
@@ -366,7 +363,6 @@
 				56F8A189273802970011ACBE /* SQLiteChangesetSyncDemoApp.swift in Sources */,
 				8A24437A2B20C43D00C76A70 /* PlayerRepository.swift in Sources */,
 				8A24437D2B20C43D00C76A70 /* Player.swift in Sources */,
-				8A2443732B2078BE00C76A70 /* GRDB+ChangesetManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

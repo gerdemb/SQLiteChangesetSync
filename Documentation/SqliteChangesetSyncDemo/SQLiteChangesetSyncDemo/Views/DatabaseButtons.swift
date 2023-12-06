@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A helper button that creates players in the database
 struct CreatePlayerButton: View {
-    @Environment(\.playerRepository) private var playerRepository
+    @Environment(\.changesetRepository) private var changesetRepository
     private var titleKey: LocalizedStringKey
     
     init(_ titleKey: LocalizedStringKey) {
@@ -11,7 +11,10 @@ struct CreatePlayerButton: View {
     
     var body: some View {
         Button {
-            _ = try! playerRepository.insert(Player.makeRandom())
+            let player = Player.makeRandom()
+            try! changesetRepository.commit { db in
+                try player.insert(db)
+            }
         } label: {
             Label(titleKey, systemImage: "plus")
         }

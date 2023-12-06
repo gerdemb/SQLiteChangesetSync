@@ -55,7 +55,34 @@ public struct ChangesetRepository {
 }
 
 extension ChangesetRepository {
-    
+    public func commit<T>(meta: String = "{}", _ updates: (Database) throws -> T) throws -> T{
+        try dbWriter.write { db in
+            // 1. Start a session
+            let session = try SQLiteSession(db.sqliteConnection!)
+            
+            // 2. Perform the update
+            let result = try updates(db)
+            
+            // 3. Capture the changeset data
+            let changesetData = try session.captureChangesetData()
+            
+            // 4. Get parent UUID
+            let parent_uuid = try Head.fetchOne(db)!.uuid
+            
+            // 5. Save the changeset data to the database
+            let changeset = Changeset(
+                parent_uuid: parent_uuid,
+                parent_changeset: changesetData.data,
+                pushed: false,
+                meta: meta
+            )
+            try changeset.insert(db)
+            
+            // 6. Update the head UUID
+            try Head.updateAll(db, Column("uuid").set(to: changeset.uuid))
+            return result
+        }
+    }
 }
 
 private struct ChangesetRepositoryKey: EnvironmentKey {
