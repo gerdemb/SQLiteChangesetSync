@@ -87,28 +87,28 @@ public struct PlayerRepository {
 extension PlayerRepository {
     /// Inserts a player and returns the inserted player.
     public func insert(_ player: Player) throws -> Player {
-        try dbWriter.writeWithChangeset { db in
+        try dbWriter.write { db in
             try player.inserted(db)
         }
     }
     
     /// Updates the player.
     public func update(_ player: Player) throws {
-        try dbWriter.writeWithChangeset { db in
+        try dbWriter.write { db in
             try player.update(db)
         }
     }
     
     /// Deletes all players.
     public func deleteAllPlayer() throws {
-        try dbWriter.writeWithChangeset { db in
+        try dbWriter.write { db in
             _ = try Player.deleteAll(db)
         }
     }
     
     /// Delete a player.
     public func deletePlayer(_ uuid: String) throws {
-        try dbWriter.writeWithChangeset { db in
+        try dbWriter.write { db in
             _ = try Player.deleteOne(db, key: uuid)
         }
     }
