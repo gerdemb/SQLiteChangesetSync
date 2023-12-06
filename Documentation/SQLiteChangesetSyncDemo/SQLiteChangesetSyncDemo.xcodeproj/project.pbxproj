@@ -283,7 +283,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 56F8A180273802970011ACBE /* Build configuration list for PBXProject "SqliteChangesetSyncDemo" */;
+			buildConfigurationList = 56F8A180273802970011ACBE /* Build configuration list for PBXProject "SQLiteChangesetSyncDemo" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -590,7 +590,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SqliteChangesetSyncDemo.app/SqliteChangesetSyncDemo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SQLiteChangesetSyncDemo.app/SQLiteChangesetSyncDemo";
 			};
 			name = Debug;
 		};
@@ -614,7 +614,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SqliteChangesetSyncDemo.app/SqliteChangesetSyncDemo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SQLiteChangesetSyncDemo.app/SQLiteChangesetSyncDemo";
 			};
 			name = Release;
 		};
@@ -665,7 +665,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		56F8A180273802970011ACBE /* Build configuration list for PBXProject "SqliteChangesetSyncDemo" */ = {
+		56F8A180273802970011ACBE /* Build configuration list for PBXProject "SQLiteChangesetSyncDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56F8A1A7273802980011ACBE /* Debug */,
