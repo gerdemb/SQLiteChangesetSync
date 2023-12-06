@@ -10,16 +10,12 @@ import GRDB
 import SQLiteChangesetSync
 
 extension GRDB.DatabaseWriter {
-    public func writeWithChangeset<T>(meta: String = "{}", _ updates: (Database) throws -> T) throws -> T {
-        try writeWithoutTransaction { db in
-            var result: T?
-            try db.inTransaction {
-                let session = try SQLiteSession(db.sqliteConnection!)
-                result = try updates(db)
-//                _ = try session.commit(meta: meta)
-                return .commit
-            }
-            return result!
+    public func writeWithChangeset<T>(_ updates: (Database) throws -> T) throws -> T {
+        try write { db in
+            let session = try SQLiteSession(db.sqliteConnection!)
+            let result = try updates(db)
+            let changesetData = try session.captureChangesetData()
+            return result
         }
     }
 }

@@ -1,6 +1,7 @@
 import Foundation
 import GRDB
 import os.log
+import SQLiteChangesetSync
 
 /// A repository of players.
 ///
@@ -59,12 +60,6 @@ public struct PlayerRepository {
     private var migrator: DatabaseMigrator {
         var migrator = DatabaseMigrator()
         
-#if DEBUG
-        // Speed up development by nuking the database when migrations change
-        // See <https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/migrations#The-eraseDatabaseOnSchemaChange-Option>
-//        migrator.eraseDatabaseOnSchemaChange = true
-#endif
-        
         migrator.registerMigration("createPlayer") { db in
             // Create a table
             // See <https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/databaseschema>
@@ -92,28 +87,28 @@ public struct PlayerRepository {
 extension PlayerRepository {
     /// Inserts a player and returns the inserted player.
     public func insert(_ player: Player) throws -> Player {
-        try dbWriter.write { db in
+        try dbWriter.writeWithChangeset { db in
             try player.inserted(db)
         }
     }
     
     /// Updates the player.
     public func update(_ player: Player) throws {
-        try dbWriter.write { db in
+        try dbWriter.writeWithChangeset { db in
             try player.update(db)
         }
     }
     
     /// Deletes all players.
     public func deleteAllPlayer() throws {
-        try dbWriter.write { db in
+        try dbWriter.writeWithChangeset { db in
             _ = try Player.deleteAll(db)
         }
     }
     
     /// Delete a player.
     public func deletePlayer(_ uuid: String) throws {
-        try dbWriter.write { db in
+        try dbWriter.writeWithChangeset { db in
             _ = try Player.deleteOne(db, key: uuid)
         }
     }
