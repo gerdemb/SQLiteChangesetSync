@@ -1,6 +1,6 @@
 //
 //  ChangesetRepository.swift
-//  
+//
 //
 //  Created by Ben Gerdemann on 12/5/23.
 //
@@ -11,14 +11,14 @@ import SwiftUI
 
 public struct ChangesetRepository {
     public static let empty = { try! ChangesetRepository(DatabaseQueue()) }
-
+    
     public init(_ dbWriter: some GRDB.DatabaseWriter) throws {
         self.dbWriter = dbWriter
-        try migrator.migrate(dbWriter)
+        try migrate(migrator)
     }
     
     private let dbWriter: any DatabaseWriter
-
+    
     private var migrator: DatabaseMigrator {
         var migrator = DatabaseMigrator()
         
@@ -41,7 +41,7 @@ public struct ChangesetRepository {
             try db.create(table: "head") { t in
                 // Define columns
                 t.column("uuid", .text).primaryKey()
-
+                
                 // Define foreign key constraints
                 t.foreignKey(["uuid"], references: "changeset", columns: ["uuid"], onDelete: .restrict, onUpdate: .restrict, deferred: true)
             }
@@ -49,7 +49,7 @@ public struct ChangesetRepository {
             // Initial value for head is NULL
             try Head(uuid: nil).insert(db)
         }
-    
+        
         return migrator
     }
     
@@ -78,7 +78,7 @@ extension ChangesetRepository {
             let changesetData = try session.captureChangesetData()
             
             // 4. Get parent UUID
-            let parent_uuid = try Head.fetchOne(db)!.uuid
+            let parent_uuid = try selectHeadUUID(db)
             
             // 5. Save the changeset data to the database
             let changeset = Changeset(
@@ -90,9 +90,57 @@ extension ChangesetRepository {
             try changeset.insert(db)
             
             // 6. Update the head UUID
-            try Head.updateAll(db, Column("uuid").set(to: changeset.uuid))
+            try updateHeadUUID(db, uuid: changeset.uuid)
             return result
         }
+    }
+    
+    public func pull() throws -> Bool {
+        var changeSetApplied = false
+        try dbWriter.write { db in
+            while true {
+                let head = try selectHeadUUID(db)
+                guard let child = try selectChangesetChild(db, uuid: head) else { break }
+                let changesetData: ChangesetData
+                if child.parent_uuid == head {
+                    changesetData = ChangesetData(data: child.parent_changeset)
+                } else {
+                    changesetData = ChangesetData(data: child.merge_changeset!)
+                }
+                try changesetData.apply(db.sqliteConnection!)
+                try updateHeadUUID(db, uuid: child.uuid)
+                changeSetApplied = true
+            }
+        }
+        return changeSetApplied
+    }
+}
+
+// MARK: Database Access Methods
+
+extension ChangesetRepository {
+    private func selectHeadUUID(_ db: Database) throws -> String? {
+        return try Head.fetchOne(db)!.uuid
+    }
+    
+    private func selectChangesetChild(_ db: Database, uuid: String?) throws -> Changeset? {
+        return try Changeset.fetchOne(db, sql: """
+            SELECT
+                *
+            FROM changeset
+            WHERE (:uuid IS NULL
+            AND parent_uuid IS NULL)
+               OR (:uuid IS NOT NULL
+                   AND parent_uuid = :uuid)
+               OR (:uuid IS NOT NULL
+                   AND merge_uuid = :uuid)
+            """, arguments: StatementArguments(
+                ["uuid": uuid]
+            ))
+    }
+    
+    private func updateHeadUUID(_ db: Database, uuid: String?) throws {
+        try Head.updateAll(db, Column("uuid").set(to: uuid))
     }
 }
 

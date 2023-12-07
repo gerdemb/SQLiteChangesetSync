@@ -28,9 +28,10 @@ public class SQLiteSession {
     public func captureChangesetData() throws -> ChangesetData {
         /// If called a second time on a session object, the changeset will contain all changes that have taken place on the connection since the session was created.
         /// In other words, a session object is not reset or zeroed by a call to sqlite3session_changeset().
-        var changeSet: UnsafeMutableRawPointer?
-        var changeSetSize: Int32 = 0
-        try exec { sqlite3session_changeset(session, &changeSetSize, &changeSet) }
-        return ChangesetData(bytes: changeSet!, length: changeSetSize)
+        var bytes: UnsafeMutableRawPointer?
+        var count: Int32 = 0
+        try exec { sqlite3session_changeset(session, &count, &bytes) }
+        defer { sqlite3_free(bytes) }
+        return ChangesetData(bytes: bytes!, count: count)
     }
 }
