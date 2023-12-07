@@ -32,6 +32,7 @@
 		8A24437D2B20C43D00C76A70 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
 		8A24437E2B20C43D00C76A70 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
 		8A24437F2B20C43D00C76A70 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
+		8A9349E82B21F34D0085F4DD /* ChangesetButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */; };
 		8AF9E36C2B1F741800A9A28B /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		56F8A1A5273802980011ACBE /* SQLiteChangesetSyncDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		8A2443782B20C43D00C76A70 /* PlayerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRepository.swift; sourceTree = "<group>"; };
 		8A2443792B20C43D00C76A70 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangesetButtons.swift; sourceTree = "<group>"; };
 		8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +113,7 @@
 			children = (
 				56F8A18A273802970011ACBE /* AppView.swift */,
 				56519DB6274EAFD700ED16D8 /* DatabaseButtons.swift */,
+				8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */,
 				56519D82274CCD1800ED16D8 /* InformationStyle.swift */,
 				5640153828366D7E00EEA9BC /* PlayerEditionView.swift */,
 				56519D95274D629600ED16D8 /* PlayerFormView.swift */,
@@ -358,6 +361,7 @@
 				56519DB7274EAFD700ED16D8 /* DatabaseButtons.swift in Sources */,
 				56089A1A29CF1B81003B3D49 /* PlayerRepository+SwiftUI.swift in Sources */,
 				8AF9E36C2B1F741800A9A28B /* DatabaseManager.swift in Sources */,
+				8A9349E82B21F34D0085F4DD /* ChangesetButtons.swift in Sources */,
 				5640153928366D7E00EEA9BC /* PlayerEditionView.swift in Sources */,
 				56089A0B29CF00ED003B3D49 /* Player+App.swift in Sources */,
 				56F8A189273802970011ACBE /* SQLiteChangesetSyncDemoApp.swift in Sources */,
@@ -735,7 +739,7 @@
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.5.0;
+				minimumVersion = 6.22.0;
 			};
 		};
 		8A54AEC62B1F50BF001B4541 /* XCRemoteSwiftPackageReference "GRDBQuery" */ = {

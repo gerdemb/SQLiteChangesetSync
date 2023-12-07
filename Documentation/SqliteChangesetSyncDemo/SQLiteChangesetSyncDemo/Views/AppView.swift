@@ -47,9 +47,10 @@ struct AppView: View {
     
     private func footer() -> some View {
         VStack {
-            Text("The demo application observes the database and displays information about the player.")
-                .informationStyle()
+//            Text("The demo application observes the database and displays information about the player.")
+//                .informationStyle()
             CreatePlayerButton("Create a Player")
+            PullButton("Pull")
         }
         .informationBox()
     }

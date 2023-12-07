@@ -99,17 +99,27 @@ extension ChangesetRepository {
         var changeSetApplied = false
         try dbWriter.write { db in
             while true {
+                // 1. Search for a child changeset
                 let head = try selectHeadUUID(db)
                 guard let child = try selectChangesetChild(db, uuid: head) else { break }
+                
+                // 2. Create ChangesetData
                 let changesetData: ChangesetData
                 if child.parent_uuid == head {
                     changesetData = ChangesetData(data: child.parent_changeset)
                 } else {
                     changesetData = ChangesetData(data: child.merge_changeset!)
                 }
+                
+                // 3. Apply Changeset to Database
                 try changesetData.apply(db.sqliteConnection!)
+                
+                // 4. Update head UUID
                 try updateHeadUUID(db, uuid: child.uuid)
                 changeSetApplied = true
+            }
+            if changeSetApplied {
+                try db.notifyChanges(in: .fullDatabase)
             }
         }
         return changeSetApplied

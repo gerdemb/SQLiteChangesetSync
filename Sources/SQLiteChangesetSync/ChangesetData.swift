@@ -32,8 +32,9 @@ public class ChangesetData {
     }
     
     private func withUnsafeMutableBytes<ResultType>(_ body: (Int32, UnsafeMutableRawPointer) throws -> ResultType) rethrows -> ResultType {
-        try data.withUnsafeMutableBytes { pointer in
-            let count = Int32(data.count)
+        let count = data.count
+        return try data.withUnsafeMutableBytes { pointer in
+            let count = Int32(count)
             let bytes = pointer.baseAddress!
             return try body(count, bytes)
         }
