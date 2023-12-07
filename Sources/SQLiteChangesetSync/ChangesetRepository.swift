@@ -56,6 +56,18 @@ public struct ChangesetRepository {
     public func migrate(_ migrator: DatabaseMigrator) throws {
         try migrator.migrate(dbWriter)
     }
+    
+    public func reset() throws {
+        try dbWriter.write { db in
+            // I don't understand why it is necessary to set defer_foreign_keys here as the foreign keys are defined
+            // as DEFERRABLE INITIALLY DEFERRED in the table definition, however if the defer_foreign_keys
+            // PRAGMA is not set the "DELETE FROM changeset" statement will throw foreign key constraint violated
+            // errors
+            try db.execute(sql: "PRAGMA defer_foreign_keys = on")
+            try updateHeadUUID(db, uuid: nil)
+            try deleteChangesetAll(db)
+        }
+    }
 }
 
 extension ChangesetRepository {
@@ -75,22 +87,23 @@ extension ChangesetRepository {
             let result = try updates(db)
             
             // 3. Capture the changeset data
-            let changesetData = try session.captureChangesetData()
-            
-            // 4. Get parent UUID
-            let parent_uuid = try selectHeadUUID(db)
-            
-            // 5. Save the changeset data to the database
-            let changeset = Changeset(
-                parent_uuid: parent_uuid,
-                parent_changeset: changesetData.data,
-                pushed: false,
-                meta: meta
-            )
-            try changeset.insert(db)
-            
-            // 6. Update the head UUID
-            try updateHeadUUID(db, uuid: changeset.uuid)
+            if let changesetData = try session.captureChangesetData() {
+                
+                // 4. Get parent UUID
+                let parent_uuid = try selectHeadUUID(db)
+                
+                // 5. Save the changeset data to the database
+                let changeset = Changeset(
+                    parent_uuid: parent_uuid,
+                    parent_changeset: changesetData.data,
+                    pushed: false,
+                    meta: meta
+                )
+                try insertChangeset(db, changeset: changeset)
+                
+                // 6. Update the head UUID
+                try updateHeadUUID(db, uuid: changeset.uuid)
+            }
             return result
         }
     }
@@ -151,6 +164,14 @@ extension ChangesetRepository {
     
     private func updateHeadUUID(_ db: Database, uuid: String?) throws {
         try Head.updateAll(db, Column("uuid").set(to: uuid))
+    }
+    
+    private func insertChangeset(_ db: Database, changeset: Changeset) throws {
+        try changeset.insert(db)
+    }
+    
+    private func deleteChangesetAll(_ db: Database) throws {
+        try Changeset.deleteAll(db)
     }
 }
 

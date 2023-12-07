@@ -50,7 +50,11 @@ struct AppView: View {
 //            Text("The demo application observes the database and displays information about the player.")
 //                .informationStyle()
             CreatePlayerButton("Create a Player")
+            PushButton("Push")
+            FetchButton("Fetch")
             PullButton("Pull")
+            ResetDatabaseButton("Reset Local Database")
+            ResetCloudKitButton("Reset CloudKit Database")
         }
         .informationBox()
     }

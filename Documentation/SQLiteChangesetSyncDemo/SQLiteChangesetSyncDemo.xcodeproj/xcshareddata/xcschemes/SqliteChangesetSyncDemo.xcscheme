@@ -17,7 +17,7 @@
                BlueprintIdentifier = "56F8A184273802970011ACBE"
                BuildableName = "SQLiteChangesetSyncDemo.app"
                BlueprintName = "SQLiteChangesetSyncDemo"
-               ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
+               ReferencedContainer = "container:SQLiteChangesetSyncDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "56F8A194273802980011ACBE"
                BuildableName = "SQLiteChangesetSyncDemoTests.xctest"
                BlueprintName = "SQLiteChangesetSyncDemoTests"
-               ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
+               ReferencedContainer = "container:SQLiteChangesetSyncDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "56F8A19E273802980011ACBE"
                BuildableName = "SQLiteChangesetSyncDemoUITests.xctest"
                BlueprintName = "SQLiteChangesetSyncDemoUITests"
-               ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
+               ReferencedContainer = "container:SQLiteChangesetSyncDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -67,14 +67,14 @@
             BlueprintIdentifier = "56F8A184273802970011ACBE"
             BuildableName = "SQLiteChangesetSyncDemo.app"
             BlueprintName = "SQLiteChangesetSyncDemo"
-            ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
+            ReferencedContainer = "container:SQLiteChangesetSyncDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "SQL_TRACE"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
@@ -91,7 +91,7 @@
             BlueprintIdentifier = "56F8A184273802970011ACBE"
             BuildableName = "SQLiteChangesetSyncDemo.app"
             BlueprintName = "SQLiteChangesetSyncDemo"
-            ReferencedContainer = "container:SqliteChangesetSyncDemo.xcodeproj">
+            ReferencedContainer = "container:SQLiteChangesetSyncDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

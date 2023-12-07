@@ -72,6 +72,10 @@ public struct PlayerRepository {
         
         return migrator
     }
+    
+    public func reset() throws {
+        try deleteAllPlayer()
+    }
 }
 
 // MARK: - Database Access: Writes
