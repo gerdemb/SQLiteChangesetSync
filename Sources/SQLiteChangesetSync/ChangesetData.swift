@@ -110,15 +110,20 @@ public class ChangesetData {
         var pGrp: OpaquePointer?
         var pnOut: Int32 = 0
         var ppOut: UnsafeMutableRawPointer?
-        
+
         try exec { sqlite3changegroup_new(&pGrp) }
+        defer { sqlite3changegroup_delete(pGrp) }
+
         for changeset in changeSets {
             try changeset.withUnsafeMutableBytes { count, bytes in
                 try exec { sqlite3changegroup_add(pGrp, count, bytes)
                 }
             }
         }
+
         try exec { sqlite3changegroup_output(pGrp, &pnOut, &ppOut) }
+        defer { sqlite3_free(ppOut) }
+
         return ChangesetData(bytes: ppOut!, count: pnOut)
     }
 }
