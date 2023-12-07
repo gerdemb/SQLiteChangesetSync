@@ -11,7 +11,7 @@ import GRDB
 public struct Changeset: Codable, Equatable {
     public let uuid: String
     public let parent_uuid: String?
-    public let parent_changeset: Data
+    public let parent_changeset: Data?
     public let merge_uuid: String?
     public let merge_changeset: Data?
     public let pushed: Bool
@@ -20,7 +20,7 @@ public struct Changeset: Codable, Equatable {
     public init(
         uuid: String? = nil,
         parent_uuid: String?,
-        parent_changeset: Data,
+        parent_changeset: Data?,
         merge_uuid: String? = nil,
         merge_changeset: Data? = nil,
         pushed: Bool,

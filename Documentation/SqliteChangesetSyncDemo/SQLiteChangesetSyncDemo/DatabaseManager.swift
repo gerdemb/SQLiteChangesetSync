@@ -26,6 +26,7 @@ public struct DatabaseManager {
             
             // Open or create the database
             let databaseURL = directoryURL.appendingPathComponent("db.sqlite")
+            try fileManager.removeItem(at: databaseURL)
             NSLog("Database stored at \(databaseURL.path)")
             let dbPool = try DatabasePool(
                 path: databaseURL.path,

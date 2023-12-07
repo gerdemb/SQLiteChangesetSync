@@ -27,7 +27,7 @@ public struct ChangesetRepository {
                 // Define columns
                 t.column("uuid", .text).notNull().primaryKey()
                 t.column("parent_uuid", .text)
-                t.column("parent_changeset", .blob).notNull()
+                t.column("parent_changeset", .blob)
                 t.column("merge_uuid", .text)
                 t.column("merge_changeset", .blob)
                 t.column("pushed", .boolean).notNull()
@@ -77,6 +77,8 @@ extension ChangesetRepository {
     }
 }
 
+// MARK: - Repository Operations
+
 extension ChangesetRepository {
     public func commit<T>(meta: String = "{}", _ updates: (Database) throws -> T) throws -> T{
         try dbWriter.write { db in
@@ -117,15 +119,18 @@ extension ChangesetRepository {
                 guard let child = try selectChangesetChild(db, uuid: head) else { break }
                 
                 // 2. Create ChangesetData
-                let changesetData: ChangesetData
+                let data: Data?
                 if child.parent_uuid == head {
-                    changesetData = ChangesetData(data: child.parent_changeset)
+                    data = child.parent_changeset
                 } else {
-                    changesetData = ChangesetData(data: child.merge_changeset!)
+                    data = child.merge_changeset
                 }
                 
                 // 3. Apply Changeset to Database
-                try changesetData.apply(db.sqliteConnection!)
+                if let data = data {
+                    let changesetData = ChangesetData(data: data)
+                    try changesetData.apply(db.sqliteConnection!)
+                }
                 
                 // 4. Update head UUID
                 try updateHeadUUID(db, uuid: child.uuid)
@@ -142,9 +147,16 @@ extension ChangesetRepository {
 // MARK: - Merging
 
 extension ChangesetRepository {
-    private func combineChangesetData(_ db: Database, _ mainUUID: String, _ branchUUID: String) throws -> ChangesetData {
+    private func combineChangesetData(_ db: Database, _ mainUUID: String, _ branchUUID: String) throws -> ChangesetData? {
         let branchChangesets = try selectChangesetBranches(db, mainUUID: mainUUID, branchUUID: branchUUID)
-        let branchChangesetData = branchChangesets.map{ ChangesetData(data: $0.parent_changeset) }
+        
+        var branchChangesetData: [ChangesetData] = []
+        for changeset in branchChangesets {
+            if let parentChangeset = changeset.parent_changeset {
+                branchChangesetData.append(ChangesetData(data: parentChangeset))
+            }
+        }
+
         return try ChangesetData.combineChangesets(branchChangesetData)
     }
     
@@ -155,9 +167,9 @@ extension ChangesetRepository {
             let changeset = Changeset(
                 uuid: UUID().uuidString,
                 parent_uuid: mainUUID,
-                parent_changeset: parentChangesetData.data,
+                parent_changeset: parentChangesetData?.data,
                 merge_uuid: branchUUID,
-                merge_changeset: mergeChangesetData.data,
+                merge_changeset: mergeChangesetData?.data,
                 pushed: false,
                 meta: meta
             )

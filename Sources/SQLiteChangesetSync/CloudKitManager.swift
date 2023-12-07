@@ -24,7 +24,7 @@ public class CloudKitManager {
     private let zone = CKRecordZone(zoneName: "ChangeSets")
     private let subscriptionID = "changeset-subscription-id"
     private let cloudDatabase: CKDatabase
-
+    
     private var lastChangeToken: CKServerChangeToken?
     private(set) public var isSetup = false
     
@@ -32,9 +32,9 @@ public class CloudKitManager {
         self.dbWriter = dbWriter
         cloudDatabase = container.privateCloudDatabase
     }
-
+    
     private let dbWriter: any DatabaseWriter
-
+    
     public func setup() async throws {
         loadLastChangeToken()
         try await createZoneIfNeeded()
@@ -82,12 +82,12 @@ extension CloudKitManager {
             let recordID = CKRecord.ID(recordName: changeset.uuid, zoneID: zone.zoneID)
             let record = CKRecord(recordType: "Changeset", recordID: recordID)
             record["parent_uuid"] = changeset.parent_uuid
-            record["parent_changeset"] = changeset.parent_changeset as NSData
+            record["parent_changeset"] = changeset.parent_changeset as? NSData
             record["merge_uuid"] = changeset.merge_uuid
             record["merge_changeset"] = changeset.merge_changeset as? NSData
             record["meta"] = changeset.meta
             try await cloudDatabase.save(record)
-
+            
             // 4. Update Changeset as pushed=true in database
             try await dbWriter.write { [self] db in
                 try updateChangesetSetPushed(db, uuid: changeset.uuid)
@@ -105,38 +105,31 @@ extension CloudKitManager {
             let changes = try await cloudDatabase.recordZoneChanges(inZoneWith: zone.zoneID, since: lastChangeToken)
             
             // 2. Iterate through new change sets
-                for change in changes.modificationResultsByID {
-                    switch change.value {
-                    case .success(let modification):
-                        let record = modification.record
-                        let uuid = record.recordID.recordName
-                        let found = try await dbWriter.read { [self] db in
-                                try selectChangesetByUUID(db, uuid: uuid)
-                        }
-                            // 3. If changeset is new, add it to newChangesets
-                            if found == nil {
-                                // Required fields
-                                if let parent_changeset = record["parent_changeset"] as? Data,
-                                   let meta = record["meta"] as? String
-                                {
-                                    let changeset = Changeset(
-                                        uuid: uuid,
-                                        parent_uuid: record["parent_uuid"],
-                                        parent_changeset: parent_changeset,
-                                        merge_uuid: record["merge_uuid"],
-                                        merge_changeset: record["merge_changeset"],
-                                        pushed: true,
-                                        meta: meta
-                                    )
-                                    newChangesets.append(changeset)
-                                } else {
-                                    debugPrint("Invalid CKRecord", record)
-                                }
-                            }
-                    case .failure(let error):
-                        debugPrint("CloudKit error \(error)")
+            for change in changes.modificationResultsByID {
+                switch change.value {
+                case .success(let modification):
+                    let record = modification.record
+                    let uuid = record.recordID.recordName
+                    let found = try await dbWriter.read { [self] db in
+                        try selectChangesetByUUID(db, uuid: uuid)
                     }
+                    // 3. If changeset is new, add it to newChangesets
+                    if found == nil {
+                        let changeset = Changeset(
+                            uuid: uuid,
+                            parent_uuid: record["parent_uuid"],
+                            parent_changeset: record["parent_changeset"],
+                            merge_uuid: record["merge_uuid"],
+                            merge_changeset: record["merge_changeset"],
+                            pushed: true,
+                            meta: record["meta"] as? String ?? "{}"
+                        )
+                        newChangesets.append(changeset)
+                    }
+                case .failure(let error):
+                    debugPrint("CloudKit error \(error)")
                 }
+            }
             
             saveChangeToken(changes.changeToken)
             
@@ -186,14 +179,14 @@ extension CloudKitManager {
         
         lastChangeToken = try? NSKeyedUnarchiver.unarchivedObject(ofClass: CKServerChangeToken.self, from: data)
     }
-
+    
     private func saveChangeToken(_ token: CKServerChangeToken) {
         let tokenData = try! NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: true)
         
         lastChangeToken = token
         UserDefaults.standard.set(tokenData, forKey: "lastChangeToken")
     }
-
+    
     private func createZoneIfNeeded() async throws {
         // Avoid the operation if this has already been done.
         guard !UserDefaults.standard.bool(forKey: "isZoneCreated") else {
@@ -209,7 +202,7 @@ extension CloudKitManager {
         
         UserDefaults.standard.setValue(true, forKey: "isZoneCreated")
     }
-
+    
     private func createSubscriptionIfNeeded() async throws {
         guard !UserDefaults.standard.bool(forKey: "isSubscribed") else {
             return

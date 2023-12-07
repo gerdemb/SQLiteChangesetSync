@@ -106,7 +106,7 @@ public class ChangesetData {
         }
     }()
     
-    static func combineChangesets(_ changeSets: [ChangesetData]) throws -> ChangesetData {
+    static func combineChangesets(_ changeSets: [ChangesetData]) throws -> ChangesetData? {
         var pGrp: OpaquePointer?
         var pnOut: Int32 = 0
         var ppOut: UnsafeMutableRawPointer?
@@ -124,6 +124,12 @@ public class ChangesetData {
         try exec { sqlite3changegroup_output(pGrp, &pnOut, &ppOut) }
         defer { sqlite3_free(ppOut) }
 
-        return ChangesetData(bytes: ppOut!, count: pnOut)
+        if let ppOut = ppOut {
+            return ChangesetData(bytes: ppOut, count: pnOut)
+        }
+        // It's possible for multiple changesets to combine into an empty changeset. For example,
+        // a changeset that INSERTs a row combined with a changeset that DELETEs that row will
+        // result in an empty changeset.
+        return nil
     }
 }
