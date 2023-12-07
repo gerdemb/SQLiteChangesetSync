@@ -34,6 +34,27 @@
 		8A24437F2B20C43D00C76A70 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
 		8A9349E82B21F34D0085F4DD /* ChangesetButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */; };
 		8ACA6CD02B220D16008B997F /* CloudKitButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA6CCF2B220D16008B997F /* CloudKitButtons.swift */; };
+		8ACA6CDA2B223FEA008B997F /* PlayerRepository+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */; };
+		8ACA6CDB2B223FEA008B997F /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A18A273802970011ACBE /* AppView.swift */; };
+		8ACA6CDC2B223FEA008B997F /* InformationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519D82274CCD1800ED16D8 /* InformationStyle.swift */; };
+		8ACA6CDD2B223FEA008B997F /* PlayerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519D95274D629600ED16D8 /* PlayerFormView.swift */; };
+		8ACA6CDE2B223FEA008B997F /* PlayerNotFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519D93274D623700ED16D8 /* PlayerNotFoundView.swift */; };
+		8ACA6CDF2B223FEA008B997F /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519D91274D611F00ED16D8 /* PlayerView.swift */; };
+		8ACA6CE02B223FEA008B997F /* DatabaseButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519DB6274EAFD700ED16D8 /* DatabaseButtons.swift */; };
+		8ACA6CE12B223FEA008B997F /* PlayerRepository+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56089A1929CF1B81003B3D49 /* PlayerRepository+SwiftUI.swift */; };
+		8ACA6CE22B223FEA008B997F /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */; };
+		8ACA6CE32B223FEA008B997F /* ChangesetButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */; };
+		8ACA6CE42B223FEA008B997F /* PlayerEditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5640153828366D7E00EEA9BC /* PlayerEditionView.swift */; };
+		8ACA6CE52B223FEA008B997F /* Player+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56089A0A29CF00ED003B3D49 /* Player+App.swift */; };
+		8ACA6CE62B223FEA008B997F /* SQLiteChangesetSyncDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A188273802970011ACBE /* SQLiteChangesetSyncDemoApp.swift */; };
+		8ACA6CE72B223FEA008B997F /* PlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443782B20C43D00C76A70 /* PlayerRepository.swift */; };
+		8ACA6CE82B223FEA008B997F /* CloudKitButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA6CCF2B220D16008B997F /* CloudKitButtons.swift */; };
+		8ACA6CE92B223FEA008B997F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
+		8ACA6CEB2B223FEA008B997F /* SQLiteChangesetSync in Frameworks */ = {isa = PBXBuildFile; productRef = 8ACA6CD82B223FEA008B997F /* SQLiteChangesetSync */; };
+		8ACA6CEC2B223FEA008B997F /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 8ACA6CD52B223FEA008B997F /* GRDB */; };
+		8ACA6CED2B223FEA008B997F /* GRDBQuery in Frameworks */ = {isa = PBXBuildFile; productRef = 8ACA6CD72B223FEA008B997F /* GRDBQuery */; };
+		8ACA6CEF2B223FEA008B997F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56F8A18F273802980011ACBE /* Preview Assets.xcassets */; };
+		8ACA6CF02B223FEA008B997F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56F8A18C273802980011ACBE /* Assets.xcassets */; };
 		8AF9E36C2B1F741800A9A28B /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +101,7 @@
 		8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangesetButtons.swift; sourceTree = "<group>"; };
 		8ACA6CCF2B220D16008B997F /* CloudKitButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitButtons.swift; sourceTree = "<group>"; };
 		8ACA6CD12B220EEE008B997F /* SQLiteChangesetSyncDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SQLiteChangesetSyncDemo.entitlements; sourceTree = "<group>"; };
+		8ACA6CF42B223FEA008B997F /* SQLiteChangesetSyncDemoCopy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLiteChangesetSyncDemoCopy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +127,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ACA6CEA2B223FEA008B997F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ACA6CEB2B223FEA008B997F /* SQLiteChangesetSync in Frameworks */,
+				8ACA6CEC2B223FEA008B997F /* GRDB in Frameworks */,
+				8ACA6CED2B223FEA008B997F /* GRDBQuery in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +185,7 @@
 				56F8A185273802970011ACBE /* SQLiteChangesetSyncDemo.app */,
 				56F8A195273802980011ACBE /* SQLiteChangesetSyncDemoTests.xctest */,
 				56F8A19F273802980011ACBE /* SQLiteChangesetSyncDemoUITests.xctest */,
+				8ACA6CF42B223FEA008B997F /* SQLiteChangesetSyncDemoCopy.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -278,6 +311,30 @@
 			productReference = 56F8A19F273802980011ACBE /* SQLiteChangesetSyncDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		8ACA6CD22B223FEA008B997F /* SQLiteChangesetSyncDemoCopy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8ACA6CF12B223FEA008B997F /* Build configuration list for PBXNativeTarget "SQLiteChangesetSyncDemoCopy" */;
+			buildPhases = (
+				8ACA6CD92B223FEA008B997F /* Sources */,
+				8ACA6CEA2B223FEA008B997F /* Frameworks */,
+				8ACA6CEE2B223FEA008B997F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8ACA6CD32B223FEA008B997F /* PBXTargetDependency */,
+				8ACA6CD42B223FEA008B997F /* PBXTargetDependency */,
+			);
+			name = SQLiteChangesetSyncDemoCopy;
+			packageProductDependencies = (
+				8ACA6CD52B223FEA008B997F /* GRDB */,
+				8ACA6CD72B223FEA008B997F /* GRDBQuery */,
+				8ACA6CD82B223FEA008B997F /* SQLiteChangesetSync */,
+			);
+			productName = QueryDemo;
+			productReference = 8ACA6CF42B223FEA008B997F /* SQLiteChangesetSyncDemoCopy.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -320,6 +377,7 @@
 			projectRoot = "";
 			targets = (
 				56F8A184273802970011ACBE /* SQLiteChangesetSyncDemo */,
+				8ACA6CD22B223FEA008B997F /* SQLiteChangesetSyncDemoCopy */,
 				56F8A194273802980011ACBE /* SQLiteChangesetSyncDemoTests */,
 				56F8A19E273802980011ACBE /* SQLiteChangesetSyncDemoUITests */,
 			);
@@ -347,6 +405,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ACA6CEE2B223FEA008B997F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ACA6CEF2B223FEA008B997F /* Preview Assets.xcassets in Resources */,
+				8ACA6CF02B223FEA008B997F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +464,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8ACA6CD92B223FEA008B997F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ACA6CDA2B223FEA008B997F /* PlayerRepository+App.swift in Sources */,
+				8ACA6CDB2B223FEA008B997F /* AppView.swift in Sources */,
+				8ACA6CDC2B223FEA008B997F /* InformationStyle.swift in Sources */,
+				8ACA6CDD2B223FEA008B997F /* PlayerFormView.swift in Sources */,
+				8ACA6CDE2B223FEA008B997F /* PlayerNotFoundView.swift in Sources */,
+				8ACA6CDF2B223FEA008B997F /* PlayerView.swift in Sources */,
+				8ACA6CE02B223FEA008B997F /* DatabaseButtons.swift in Sources */,
+				8ACA6CE12B223FEA008B997F /* PlayerRepository+SwiftUI.swift in Sources */,
+				8ACA6CE22B223FEA008B997F /* DatabaseManager.swift in Sources */,
+				8ACA6CE32B223FEA008B997F /* ChangesetButtons.swift in Sources */,
+				8ACA6CE42B223FEA008B997F /* PlayerEditionView.swift in Sources */,
+				8ACA6CE52B223FEA008B997F /* Player+App.swift in Sources */,
+				8ACA6CE62B223FEA008B997F /* SQLiteChangesetSyncDemoApp.swift in Sources */,
+				8ACA6CE72B223FEA008B997F /* PlayerRepository.swift in Sources */,
+				8ACA6CE82B223FEA008B997F /* CloudKitButtons.swift in Sources */,
+				8ACA6CE92B223FEA008B997F /* Player.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -415,6 +505,14 @@
 			targetProxy = 56F8A1A0273802980011ACBE /* PBXContainerItemProxy */;
 		};
 		56F8A1B5273803B60011ACBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 56F8A1B4273803B60011ACBE /* GRDB */;
+		};
+		8ACA6CD32B223FEA008B997F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 56519DC3274FC44E00ED16D8 /* GRDBQuery */;
+		};
+		8ACA6CD42B223FEA008B997F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 56F8A1B4273803B60011ACBE /* GRDB */;
 		};
@@ -695,6 +793,68 @@
 			};
 			name = Release;
 		};
+		8ACA6CF22B223FEA008B997F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SQLiteChangesetSyncDemo/SQLiteChangesetSyncDemo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SqliteChangesetSyncDemo/Preview Content\"";
+				DEVELOPMENT_TEAM = V26GGYHHXZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.gerdemb.SQLiteChangesetSyncDemoCopy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/../../Sources/SQLiteSessionExtension";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8ACA6CF32B223FEA008B997F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SQLiteChangesetSyncDemo/SQLiteChangesetSyncDemo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SqliteChangesetSyncDemo/Preview Content\"";
+				DEVELOPMENT_TEAM = V26GGYHHXZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.gerdemb.SQLiteChangesetSyncDemoCopy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/../../Sources/SQLiteSessionExtension";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -734,6 +894,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		8ACA6CF12B223FEA008B997F /* Build configuration list for PBXNativeTarget "SQLiteChangesetSyncDemoCopy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8ACA6CF22B223FEA008B997F /* Debug */,
+				8ACA6CF32B223FEA008B997F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -760,6 +929,14 @@
 				minimumVersion = 0.8.0;
 			};
 		};
+		8ACA6CD62B223FEA008B997F /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.22.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -781,6 +958,19 @@
 			productName = GRDB;
 		};
 		8A2443752B20BFC700C76A70 /* SQLiteChangesetSync */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SQLiteChangesetSync;
+		};
+		8ACA6CD52B223FEA008B997F /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8ACA6CD62B223FEA008B997F /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
+		8ACA6CD72B223FEA008B997F /* GRDBQuery */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GRDBQuery;
+		};
+		8ACA6CD82B223FEA008B997F /* SQLiteChangesetSync */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SQLiteChangesetSync;
 		};
