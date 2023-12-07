@@ -139,6 +139,44 @@ extension ChangesetRepository {
     }
 }
 
+// MARK: - Merging
+
+extension ChangesetRepository {
+    private func combineChangesetData(_ db: Database, _ mainUUID: String, _ branchUUID: String) throws -> ChangesetData {
+        let branchChangesets = try selectChangesetBranches(db, mainUUID: mainUUID, branchUUID: branchUUID)
+        let branchChangesetData = branchChangesets.map{ ChangesetData(data: $0.parent_changeset) }
+        return try ChangesetData.combineChangesets(branchChangesetData)
+    }
+    
+    public func merge(_ mainUUID: String, _ branchUUID: String, meta: String = "{}") throws -> Changeset {
+        try dbWriter.write { db in
+            let parentChangesetData = try combineChangesetData(db, mainUUID, branchUUID)
+            let mergeChangesetData = try combineChangesetData(db, branchUUID, mainUUID)
+            let changeset = Changeset(
+                uuid: UUID().uuidString,
+                parent_uuid: mainUUID,
+                parent_changeset: parentChangesetData.data,
+                merge_uuid: branchUUID,
+                merge_changeset: mergeChangesetData.data,
+                pushed: false,
+                meta: meta
+            )
+            try insertChangeset(db, changeset: changeset)
+            return changeset
+        }
+    }
+    
+    public func mergeAll() throws {
+            while true {
+                let leafNodes = try dbWriter.read { db in
+                    try selectChangesetLeaves(db)
+                }
+                guard (leafNodes.count >= 2) else { break }
+                let _ = try merge(leafNodes[0].uuid, leafNodes[1].uuid)
+            }
+    }
+}
+
 // MARK: Database Access Methods
 
 extension ChangesetRepository {
@@ -172,6 +210,118 @@ extension ChangesetRepository {
     
     private func deleteChangesetAll(_ db: Database) throws {
         try Changeset.deleteAll(db)
+    }
+    
+    private func selectChangesetBranches(_ db: Database, mainUUID: String, branchUUID: String) throws -> [Changeset] {
+        return try Changeset.fetchAll(db, sql: """
+        WITH RECURSIVE
+            AncestorsMain(uuid, parent_uuid, parent_changeset, merge_uuid, merge_changeset, pushed, meta, depth) AS (
+                SELECT
+                    uuid
+                  , parent_uuid
+                  , parent_changeset
+                  , merge_uuid
+                  , merge_changeset
+                  , pushed
+                  , meta
+                  , 0 AS depth
+                FROM changeset
+                WHERE uuid = :mainUUID
+                UNION ALL
+                SELECT
+                    n.uuid
+                  , n.parent_uuid
+                  , n.parent_changeset
+                  , n.merge_uuid
+                  , n.merge_changeset
+                  , n.pushed
+                  , n.meta
+                  , a.depth + 1
+                FROM changeset n
+                INNER JOIN AncestorsMain a ON n.uuid = a.parent_uuid
+                UNION ALL
+                SELECT
+                    n.uuid
+                  , n.parent_uuid
+                  , n.parent_changeset
+                  , n.merge_uuid
+                  , n.merge_changeset
+                  , n.pushed
+                  , n.meta
+                  , a.depth + 1
+                FROM changeset n
+                INNER JOIN AncestorsMain a ON n.uuid = a.merge_uuid
+                WHERE n.merge_uuid IS NOT NULL
+            )
+          , AncestorsBranch(uuid, parent_uuid, parent_changeset, merge_uuid, merge_changeset, pushed, meta, depth) AS (
+              SELECT
+                  uuid
+                , parent_uuid
+                , parent_changeset
+                , merge_uuid
+                , merge_changeset
+                , pushed
+                , meta
+                , 0 AS depth
+              FROM changeset
+              WHERE uuid = :branchUUID
+              UNION ALL
+              SELECT
+                  n.uuid
+                , n.parent_uuid
+                , n.parent_changeset
+                , n.merge_uuid
+                , n.merge_changeset
+                , n.pushed
+                , n.meta
+                , a.depth + 1
+              FROM changeset n
+              INNER JOIN AncestorsBranch a ON n.uuid = a.parent_uuid
+              UNION ALL
+              SELECT
+                  n.uuid
+                , n.parent_uuid
+                , n.parent_changeset
+                , n.merge_uuid
+                , n.merge_changeset
+                , n.pushed
+                , n.meta
+                , a.depth + 1
+              FROM changeset n
+              INNER JOIN AncestorsBranch a ON n.uuid = a.merge_uuid
+              WHERE n.merge_uuid IS NOT NULL
+          )
+        SELECT DISTINCT
+            ab.uuid
+          , ab.parent_uuid
+          , ab.parent_changeset
+          , ab.merge_uuid
+          , ab.merge_changeset
+          , ab.meta
+          , ab.pushed
+        FROM AncestorsBranch ab
+        LEFT JOIN AncestorsMain am ON ab.uuid = am.uuid
+        WHERE am.uuid IS NULL
+          AND ab.merge_uuid IS NULL
+        ORDER BY
+            ab.depth DESC
+    """, arguments: StatementArguments(
+        ["mainUUID": mainUUID, "branchUUID": branchUUID]
+    ))
+    }
+    
+    private func selectChangesetLeaves(_ db: Database) throws -> [Changeset] {
+        return try Changeset.fetchAll(db, sql: """
+        SELECT
+            *
+        FROM changeset AS n
+        WHERE NOT EXISTS (
+        SELECT
+            1
+        FROM changeset AS m
+        WHERE m.parent_uuid = n.uuid
+        OR m.merge_uuid = n.uuid);
+    """)
     }
 }
 

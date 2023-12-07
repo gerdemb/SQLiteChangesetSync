@@ -24,3 +24,19 @@ struct PullButton: View {
     }
 }
 
+struct MergeButton: View {
+    @Environment(\.changesetRepository) private var changesetRepository
+    private var titleKey: LocalizedStringKey
+    
+    init(_ titleKey: LocalizedStringKey) {
+        self.titleKey = titleKey
+    }
+    
+    var body: some View {
+        Button {
+            _ = try! changesetRepository.mergeAll()
+        } label: {
+            Label(titleKey, systemImage: "plus")
+        }
+    }
+}

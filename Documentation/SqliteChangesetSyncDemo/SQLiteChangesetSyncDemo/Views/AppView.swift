@@ -55,6 +55,7 @@ struct AppView: View {
             }
             HStack {
                 FetchButton("Fetch")
+                MergeButton("Merge")
                 PullButton("Pull")
             }
             HStack {
