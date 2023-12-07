@@ -10,7 +10,7 @@ import GRDB
 import SwiftUI
 
 public struct ChangesetRepository {
-    static let empty = { try! ChangesetRepository(DatabaseQueue()) }
+    public static let empty = { try! ChangesetRepository(DatabaseQueue()) }
 
     public init(_ dbWriter: some GRDB.DatabaseWriter) throws {
         self.dbWriter = dbWriter
@@ -51,6 +51,17 @@ public struct ChangesetRepository {
         }
     
         return migrator
+    }
+    
+    public func migrate(_ migrator: DatabaseMigrator) throws {
+        try migrator.migrate(dbWriter)
+    }
+}
+
+extension ChangesetRepository {
+    /// Provides a read-only access to the database.
+    public var reader: any GRDB.DatabaseReader {
+        dbWriter
     }
 }
 

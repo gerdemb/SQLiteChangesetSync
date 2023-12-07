@@ -1,11 +1,12 @@
 import Foundation
 import GRDB
+import SQLiteChangesetSync
 
 // A `PlayerRepository` extension for creating various repositories for the
 // app, tests, and previews.
 extension PlayerRepository {
     /// The on-disk repository for the application.
-    static let empty = { try! PlayerRepository(DatabaseQueue()) }
+    static let empty = { try! PlayerRepository(ChangesetRepository.empty()) }
     
     /// Returns an in-memory repository that contains one player,
     /// for previews and tests.

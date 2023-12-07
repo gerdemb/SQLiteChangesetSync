@@ -3,8 +3,9 @@ import SQLiteChangesetSync
 
 @main
 struct SQLiteChangesetSyncDemo: App {
-    let changsetRepository = { try! ChangesetRepository(DatabaseManager.shared) }()
-    let playerRepository = { try! PlayerRepository(DatabaseManager.shared) }()
+    let dbWriter = DatabaseManager.shared
+    let changsetRepository: ChangesetRepository
+    let playerRepository: PlayerRepository
 
     var body: some Scene {
         WindowGroup {
@@ -12,6 +13,15 @@ struct SQLiteChangesetSyncDemo: App {
                 // Use the on-disk repository in the application
                 .environment(\.playerRepository, playerRepository)
                 .environment(\.changesetRepository, changsetRepository)
+        }
+    }
+    
+    init() {
+        do {
+            self.changsetRepository = try ChangesetRepository(dbWriter)
+            self.playerRepository = try PlayerRepository(changsetRepository)
+        } catch {
+            fatalError("Could not init \(error)")
         }
     }
 }

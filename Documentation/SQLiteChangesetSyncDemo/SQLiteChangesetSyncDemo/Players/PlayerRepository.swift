@@ -41,18 +41,12 @@ public struct PlayerRepository {
     ///
     /// - important: Create the `DatabaseWriter` with a configuration
     ///   returned by ``makeConfiguration(_:)``.
-    public init(_ dbWriter: some GRDB.DatabaseWriter) throws {
-        self.dbWriter = dbWriter
-        try migrator.migrate(dbWriter)
+    public init(_ changesetRepository: ChangesetRepository) throws {
+        self.changesetRepository = changesetRepository
+        try changesetRepository.migrate(migrator)
     }
-    
-    /// Provides access to the database.
-    ///
-    /// Application can use a `DatabasePool`, while SwiftUI previews and tests
-    /// can use a fast in-memory `DatabaseQueue`.
-    ///
-    /// See <https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/databaseconnections>
-    private let dbWriter: any DatabaseWriter
+
+    private let changesetRepository: ChangesetRepository
     
     /// The DatabaseMigrator that defines the database schema.
     ///
@@ -87,28 +81,28 @@ public struct PlayerRepository {
 extension PlayerRepository {
     /// Inserts a player and returns the inserted player.
     public func insert(_ player: Player) throws -> Player {
-        try dbWriter.write { db in
+        try changesetRepository.commit { db in
             try player.inserted(db)
         }
     }
     
     /// Updates the player.
     public func update(_ player: Player) throws {
-        try dbWriter.write { db in
+        try changesetRepository.commit { db in
             try player.update(db)
         }
     }
     
     /// Deletes all players.
     public func deleteAllPlayer() throws {
-        try dbWriter.write { db in
+        try changesetRepository.commit { db in
             _ = try Player.deleteAll(db)
         }
     }
     
     /// Delete a player.
     public func deletePlayer(_ uuid: String) throws {
-        try dbWriter.write { db in
+        try changesetRepository.commit { db in
             _ = try Player.deleteOne(db, key: uuid)
         }
     }
@@ -123,6 +117,6 @@ extension PlayerRepository {
 extension PlayerRepository {
     /// Provides a read-only access to the database.
     public var reader: any GRDB.DatabaseReader {
-        dbWriter
+        changesetRepository.reader
     }
 }
