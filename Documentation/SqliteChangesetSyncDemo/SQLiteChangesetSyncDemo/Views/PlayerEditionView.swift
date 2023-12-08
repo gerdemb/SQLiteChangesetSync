@@ -24,17 +24,6 @@ struct PlayerEditionView: View {
             if let player = playerPresence.player {
                 VStack {
                     PlayerFormView(player: player)
-                    
-                    Spacer()
-                    
-                    if playerPresence.exists {
-                        VStack(spacing: 10) {
-                            Text("What if another application component deletes the player at the most unexpected moment?")
-                                .informationStyle()
-                            DeletePlayersButton("Delete Player")
-                        }
-                        .informationBox()
-                    }
                 }
                 .padding(.horizontal)
                 .navigationTitle(player.name)
