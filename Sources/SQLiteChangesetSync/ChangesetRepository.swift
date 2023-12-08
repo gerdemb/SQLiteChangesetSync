@@ -147,7 +147,7 @@ extension ChangesetRepository {
 // MARK: - Merging
 
 extension ChangesetRepository {
-    private func branchChangesetData(_ db: Database, _ mainUUID: String, _ branchUUID: String) throws -> (changesetData: ChangesetData?, meta: [String]) {
+    private func branchChangesetData(_ db: Database, _ mainUUID: String, _ branchUUID: String) throws -> (changesets: [Changeset], combinedData: ChangesetData?) {
         let changesets = try selectChangesetBranches(db, mainUUID: mainUUID, branchUUID: branchUUID)
         
         let changesetData = changesets
@@ -155,22 +155,19 @@ extension ChangesetRepository {
             .map { ChangesetData(data: $0) }
         let combinedData = try ChangesetData.combineChangesets(changesetData)
         
-        let meta = changesets
-            .map { $0.meta }
-
-        return (combinedData, meta)
+        return (changesets, combinedData)
     }
     
     public func merge(_ mainUUID: String, _ branchUUID: String) throws -> Changeset {
         try dbWriter.write { db in
-            let (parentChangesetData, parentMeta) = try branchChangesetData(db, mainUUID, branchUUID)
-            let (mergeChangesetData, mergeMeta) = try branchChangesetData(db, branchUUID, mainUUID)
+            let (parentChangesets, parentChangesetData) = try branchChangesetData(db, mainUUID, branchUUID)
+            let (mergeChangesets, mergeChangesetData) = try branchChangesetData(db, branchUUID, mainUUID)
             
-            let decodedParentMeta = decodeJSONStrings(parentMeta)
-            let decodedMergeMeta = decodeJSONStrings(mergeMeta)
-            let combinedDictionary = ["parentMeta": decodedParentMeta, "mergeMeta": decodedMergeMeta]
-            let combinedJsonData = try JSONSerialization.data(withJSONObject: combinedDictionary)
-            let meta = String(data: combinedJsonData, encoding: .utf8)
+            let parentUUIDs = parentChangesets.map { $0.uuid }
+            let mergeUUIDs = mergeChangesets.map { $0.uuid }
+            let metaDictionary = ["parent": parentUUIDs, "merge": mergeUUIDs]
+            let metaJsonData = try JSONSerialization.data(withJSONObject: metaDictionary)
+            let meta = String(data: metaJsonData, encoding: .utf8)
 
             let changeset = Changeset(
                 uuid: UUID().uuidString,
