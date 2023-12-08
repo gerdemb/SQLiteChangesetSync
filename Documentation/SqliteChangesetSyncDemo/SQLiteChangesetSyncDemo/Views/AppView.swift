@@ -4,7 +4,7 @@ import SwiftUI
 
 /// The main application view
 struct AppView: View {
-    @Environment(\.changesetRepository) private var changesetRepository
+    @Environment(\.playerRepository) private var playerRepository
     
     /// A helper `Identifiable` type that can feed SwiftUI `sheet(item:onDismiss:content:)`
     private struct EditedPlayer: Identifiable {
@@ -25,7 +25,7 @@ struct AppView: View {
                         PlayerView(
                             player: player,
                             editAction: { editPlayer(uuid: player.uuid) },
-                            deleteAction: { try? deletePlayer(uuid: player.uuid) }
+                            deleteAction: { try? deletePlayer(player: player) }
                         )
                         .padding(.vertical)
                     }
@@ -70,13 +70,8 @@ struct AppView: View {
         editedPlayer = EditedPlayer(uuid: uuid)
     }
     
-    private func deletePlayer(uuid: String) throws {
-        let meta = """
-        { "message": "DELETE \(uuid)" }
-        """
-        _ = try changesetRepository.commit(meta: meta) { db in
-            try Player.deleteOne(db, key: uuid)
-        }
+    private func deletePlayer(player: Player) throws {
+        try playerRepository.deletePlayer(player)
     }
 }
 

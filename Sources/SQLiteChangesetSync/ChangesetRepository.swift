@@ -147,23 +147,31 @@ extension ChangesetRepository {
 // MARK: - Merging
 
 extension ChangesetRepository {
-    private func combineChangesetData(_ db: Database, _ mainUUID: String, _ branchUUID: String) throws -> ChangesetData? {
-        let branchChangesets = try selectChangesetBranches(db, mainUUID: mainUUID, branchUUID: branchUUID)
+    private func branchChangesetData(_ db: Database, _ mainUUID: String, _ branchUUID: String) throws -> (changesetData: ChangesetData?, meta: [String]) {
+        let changesets = try selectChangesetBranches(db, mainUUID: mainUUID, branchUUID: branchUUID)
         
-        var branchChangesetData: [ChangesetData] = []
-        for changeset in branchChangesets {
-            if let parentChangeset = changeset.parent_changeset {
-                branchChangesetData.append(ChangesetData(data: parentChangeset))
-            }
-        }
+        let changesetData = changesets
+            .compactMap { $0.parent_changeset }
+            .map { ChangesetData(data: $0) }
+        let combinedData = try ChangesetData.combineChangesets(changesetData)
+        
+        let meta = changesets
+            .map { $0.meta }
 
-        return try ChangesetData.combineChangesets(branchChangesetData)
+        return (combinedData, meta)
     }
     
-    public func merge(_ mainUUID: String, _ branchUUID: String, meta: String = "{}") throws -> Changeset {
+    public func merge(_ mainUUID: String, _ branchUUID: String) throws -> Changeset {
         try dbWriter.write { db in
-            let parentChangesetData = try combineChangesetData(db, mainUUID, branchUUID)
-            let mergeChangesetData = try combineChangesetData(db, branchUUID, mainUUID)
+            let (parentChangesetData, parentMeta) = try branchChangesetData(db, mainUUID, branchUUID)
+            let (mergeChangesetData, mergeMeta) = try branchChangesetData(db, branchUUID, mainUUID)
+            
+            let decodedParentMeta = decodeJSONStrings(parentMeta)
+            let decodedMergeMeta = decodeJSONStrings(mergeMeta)
+            let combinedDictionary = ["parentMeta": decodedParentMeta, "mergeMeta": decodedMergeMeta]
+            let combinedJsonData = try JSONSerialization.data(withJSONObject: combinedDictionary)
+            let meta = String(data: combinedJsonData, encoding: .utf8)
+
             let changeset = Changeset(
                 uuid: UUID().uuidString,
                 parent_uuid: mainUUID,
@@ -171,7 +179,7 @@ extension ChangesetRepository {
                 merge_uuid: branchUUID,
                 merge_changeset: mergeChangesetData?.data,
                 pushed: false,
-                meta: meta
+                meta: meta ?? "{}"
             )
             try insertChangeset(db, changeset: changeset)
             return changeset
@@ -186,6 +194,13 @@ extension ChangesetRepository {
                 guard (leafNodes.count >= 2) else { break }
                 let _ = try merge(leafNodes[0].uuid, leafNodes[1].uuid)
             }
+    }
+    
+    private func decodeJSONStrings(_ jsonStrings: [String]) -> [Any] {
+        return jsonStrings.compactMap { jsonString in
+            guard let jsonData = jsonString.data(using: .utf8) else { return nil }
+            return try? JSONSerialization.jsonObject(with: jsonData, options: [])
+        }
     }
 }
 
@@ -263,7 +278,7 @@ extension ChangesetRepository {
                   , a.depth + 1
                 FROM changeset n
                 INNER JOIN AncestorsMain a ON n.uuid = a.merge_uuid
-                WHERE n.merge_uuid IS NOT NULL
+                WHERE a.merge_uuid IS NOT NULL
             )
           , AncestorsBranch(uuid, parent_uuid, parent_changeset, merge_uuid, merge_changeset, pushed, meta, depth) AS (
               SELECT
@@ -301,7 +316,7 @@ extension ChangesetRepository {
                 , a.depth + 1
               FROM changeset n
               INNER JOIN AncestorsBranch a ON n.uuid = a.merge_uuid
-              WHERE n.merge_uuid IS NOT NULL
+              WHERE a.merge_uuid IS NOT NULL
           )
         SELECT DISTINCT
             ab.uuid

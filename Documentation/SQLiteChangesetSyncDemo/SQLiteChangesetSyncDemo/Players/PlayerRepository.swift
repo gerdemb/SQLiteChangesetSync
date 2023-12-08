@@ -85,29 +85,33 @@ public struct PlayerRepository {
 extension PlayerRepository {
     /// Inserts a player and returns the inserted player.
     public func insert(_ player: Player) throws -> Player {
-        try changesetRepository.commit { db in
+        let meta = ChangesetMeta(message: "Insert \(player.name)")
+        return try changesetRepository.commit(meta: meta.asJSONString()) { db in
             try player.inserted(db)
         }
     }
     
     /// Updates the player.
     public func update(_ player: Player) throws {
-        try changesetRepository.commit { db in
+        let meta = ChangesetMeta(message: "Update \(player.name) score=\(player.score)")
+        return try changesetRepository.commit(meta: meta.asJSONString()) { db in
             try player.update(db)
         }
     }
     
     /// Deletes all players.
     public func deleteAllPlayer() throws {
-        try changesetRepository.commit { db in
+        let meta = ChangesetMeta(message: "Delete all players")
+        return try changesetRepository.commit(meta: meta.asJSONString()) { db in
             _ = try Player.deleteAll(db)
         }
     }
     
     /// Delete a player.
-    public func deletePlayer(_ uuid: String) throws {
-        try changesetRepository.commit { db in
-            _ = try Player.deleteOne(db, key: uuid)
+    public func deletePlayer(_ player: Player) throws {
+        let meta = ChangesetMeta(message: "Delete player \(player.name)")
+        return try changesetRepository.commit(meta: meta.asJSONString()) { db in
+            try player.delete(db)
         }
     }
 }

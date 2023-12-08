@@ -32,6 +32,8 @@
 		8A24437D2B20C43D00C76A70 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
 		8A24437E2B20C43D00C76A70 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
 		8A24437F2B20C43D00C76A70 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
+		8A5D06702B230A6700DA5F21 /* ChangesetMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */; };
+		8A5D06712B230A6700DA5F21 /* ChangesetMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */; };
 		8A9349E82B21F34D0085F4DD /* ChangesetButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */; };
 		8ACA6CD02B220D16008B997F /* CloudKitButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA6CCF2B220D16008B997F /* CloudKitButtons.swift */; };
 		8ACA6CDA2B223FEA008B997F /* PlayerRepository+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */; };
@@ -98,6 +100,7 @@
 		56F8A1A5273802980011ACBE /* SQLiteChangesetSyncDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		8A2443782B20C43D00C76A70 /* PlayerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRepository.swift; sourceTree = "<group>"; };
 		8A2443792B20C43D00C76A70 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangesetMeta.swift; sourceTree = "<group>"; };
 		8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangesetButtons.swift; sourceTree = "<group>"; };
 		8ACA6CCF2B220D16008B997F /* CloudKitButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitButtons.swift; sourceTree = "<group>"; };
 		8ACA6CD12B220EEE008B997F /* SQLiteChangesetSyncDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SQLiteChangesetSyncDemo.entitlements; sourceTree = "<group>"; };
@@ -199,6 +202,7 @@
 				56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */,
 				56089A1929CF1B81003B3D49 /* PlayerRepository+SwiftUI.swift */,
 				8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */,
+				8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */,
 				56519D99274E1B9A00ED16D8 /* Views */,
 				8A2443772B20C41200C76A70 /* Players */,
 				56F8A18C273802980011ACBE /* Assets.xcassets */,
@@ -431,6 +435,7 @@
 				56519D94274D623700ED16D8 /* PlayerNotFoundView.swift in Sources */,
 				56519D92274D611F00ED16D8 /* PlayerView.swift in Sources */,
 				56519DB7274EAFD700ED16D8 /* DatabaseButtons.swift in Sources */,
+				8A5D06702B230A6700DA5F21 /* ChangesetMeta.swift in Sources */,
 				56089A1A29CF1B81003B3D49 /* PlayerRepository+SwiftUI.swift in Sources */,
 				8AF9E36C2B1F741800A9A28B /* DatabaseManager.swift in Sources */,
 				8A9349E82B21F34D0085F4DD /* ChangesetButtons.swift in Sources */,
@@ -475,6 +480,7 @@
 				8ACA6CDE2B223FEA008B997F /* PlayerNotFoundView.swift in Sources */,
 				8ACA6CDF2B223FEA008B997F /* PlayerView.swift in Sources */,
 				8ACA6CE02B223FEA008B997F /* DatabaseButtons.swift in Sources */,
+				8A5D06712B230A6700DA5F21 /* ChangesetMeta.swift in Sources */,
 				8ACA6CE12B223FEA008B997F /* PlayerRepository+SwiftUI.swift in Sources */,
 				8ACA6CE22B223FEA008B997F /* DatabaseManager.swift in Sources */,
 				8ACA6CE32B223FEA008B997F /* ChangesetButtons.swift in Sources */,

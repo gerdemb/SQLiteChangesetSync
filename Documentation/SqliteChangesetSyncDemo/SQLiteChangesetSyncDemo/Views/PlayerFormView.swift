@@ -3,7 +3,7 @@ import SwiftUI
 
 /// The view that edits a player
 struct PlayerFormView: View {
-    @Environment(\.changesetRepository) private var changesetRepository
+    @Environment(\.playerRepository) private var playerRepository
     let player: Player
     
     var body: some View {
@@ -17,12 +17,7 @@ struct PlayerFormView: View {
         do {
             var updatedPlayer = player
             transform(&updatedPlayer.score)
-            let meta = """
-            { "message": "UPDATE \(updatedPlayer.uuid)" }
-            """
-            try changesetRepository.commit(meta: meta) { db in
-                try updatedPlayer.update(db)
-            }
+            try playerRepository.update(player)
         } catch RecordError.recordNotFound {
             // Oops, player does not exist.
             // Ignore this error: `PlayerEditionView` will dismiss.
