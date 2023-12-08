@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct PushButton: View {
     @Environment(\.cloudKitManager) private var cloudKitManager
@@ -19,9 +20,9 @@ struct PushButton: View {
         Button {
             Task {
                 do {
-                    try await cloudKitManager.push()
+                    _ = try await cloudKitManager.push()
                 } catch {
-                    debugPrint("CloudKit error \(error)")
+                    Logger.sqliteChangesetSyncDemo.error("Push error \(error)")
                 }
             }
         } label: {
@@ -42,9 +43,9 @@ struct FetchButton: View {
         Button {
             Task {
                 do {
-                    try await cloudKitManager.fetch()
+                    _ = try await cloudKitManager.fetch()
                 } catch {
-                    debugPrint("CloudKit error \(error)")
+                    Logger.sqliteChangesetSyncDemo.error("Fetch error \(error)")
                 }
             }
         } label: {

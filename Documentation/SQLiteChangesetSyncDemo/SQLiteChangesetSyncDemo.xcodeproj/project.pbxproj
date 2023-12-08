@@ -34,6 +34,7 @@
 		8A24437F2B20C43D00C76A70 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2443792B20C43D00C76A70 /* Player.swift */; };
 		8A5D06702B230A6700DA5F21 /* ChangesetMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */; };
 		8A5D06712B230A6700DA5F21 /* ChangesetMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */; };
+		8A71C2782B23CDE800BC0475 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A71C2772B23CDE800BC0475 /* Logger.swift */; };
 		8A9349E82B21F34D0085F4DD /* ChangesetButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */; };
 		8ACA6CD02B220D16008B997F /* CloudKitButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA6CCF2B220D16008B997F /* CloudKitButtons.swift */; };
 		8ACA6CDA2B223FEA008B997F /* PlayerRepository+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */; };
@@ -101,6 +102,7 @@
 		8A2443782B20C43D00C76A70 /* PlayerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRepository.swift; sourceTree = "<group>"; };
 		8A2443792B20C43D00C76A70 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangesetMeta.swift; sourceTree = "<group>"; };
+		8A71C2772B23CDE800BC0475 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangesetButtons.swift; sourceTree = "<group>"; };
 		8ACA6CCF2B220D16008B997F /* CloudKitButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitButtons.swift; sourceTree = "<group>"; };
 		8ACA6CD12B220EEE008B997F /* SQLiteChangesetSyncDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SQLiteChangesetSyncDemo.entitlements; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				56089A1929CF1B81003B3D49 /* PlayerRepository+SwiftUI.swift */,
 				8AF9E36B2B1F741800A9A28B /* DatabaseManager.swift */,
 				8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */,
+				8A71C2772B23CDE800BC0475 /* Logger.swift */,
 				56519D99274E1B9A00ED16D8 /* Views */,
 				8A2443772B20C41200C76A70 /* Players */,
 				56F8A18C273802980011ACBE /* Assets.xcassets */,
@@ -441,6 +444,7 @@
 				8A9349E82B21F34D0085F4DD /* ChangesetButtons.swift in Sources */,
 				5640153928366D7E00EEA9BC /* PlayerEditionView.swift in Sources */,
 				56089A0B29CF00ED003B3D49 /* Player+App.swift in Sources */,
+				8A71C2782B23CDE800BC0475 /* Logger.swift in Sources */,
 				56F8A189273802970011ACBE /* SQLiteChangesetSyncDemoApp.swift in Sources */,
 				8A24437A2B20C43D00C76A70 /* PlayerRepository.swift in Sources */,
 				8ACA6CD02B220D16008B997F /* CloudKitButtons.swift in Sources */,

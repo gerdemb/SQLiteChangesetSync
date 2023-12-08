@@ -7,8 +7,8 @@
 
 import Foundation
 import GRDB
-import os.log
 import SwiftUI
+import OSLog
 
 public struct DatabaseManager {
     /// The on-disk database for the application.
@@ -27,7 +27,7 @@ public struct DatabaseManager {
             // Open or create the database
             let databaseURL = directoryURL.appendingPathComponent("db.sqlite")
 //            try fileManager.removeItem(at: databaseURL)
-            NSLog("Database stored at \(databaseURL.path)")
+            Logger.sqliteChangesetSyncDemo.info("Database stored at \(databaseURL.path)")
             let dbPool = try DatabasePool(
                 path: databaseURL.path,
                 // Use default PlayerRepository configuration
@@ -83,7 +83,7 @@ extension DatabaseManager {
                     // information (statement arguments) are not logged
                     // unless config.publicStatementArguments is set
                     // (see below).
-                    os_log("%{public}@", log: sqlLogger, type: .debug, String(describing: $0))
+                    Logger.SQL.debug("\(String(describing: $0))")
                 }
             }
         }

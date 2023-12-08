@@ -8,11 +8,10 @@
 import Foundation
 
 struct ChangesetMeta: Codable {
-    private static var jsonEncoder = JSONEncoder()
     let message: String
     
     func asJSONString() throws -> String {
-        let jsonData = try Self.jsonEncoder.encode(self)
+        let jsonData = try JSONEncoder().encode(self)
         return String(data: jsonData, encoding: .utf8) ?? "{}"
     }
 }

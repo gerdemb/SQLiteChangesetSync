@@ -1,4 +1,5 @@
 import SwiftUI
+import OSLog
 
 /// A helper button that creates players in the database
 struct CreatePlayerButton: View {
@@ -12,7 +13,11 @@ struct CreatePlayerButton: View {
     var body: some View {
         Button {
             let player = Player.makeRandom()
-            _ = try! playerRepository.insert(player)
+            do {
+                _ = try playerRepository.insert(player)
+            } catch {
+                Logger.sqliteChangesetSyncDemo.error("Player insert error \(error)")
+            }
         } label: {
             Label(titleKey, systemImage: "plus")
         }

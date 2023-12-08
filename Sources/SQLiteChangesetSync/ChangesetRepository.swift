@@ -8,7 +8,9 @@
 import Foundation
 import GRDB
 import SwiftUI
+import OSLog
 
+@available(iOS 14.0, *)
 public struct ChangesetRepository {
     public static let empty = { try! ChangesetRepository(DatabaseQueue()) }
     
@@ -67,9 +69,11 @@ public struct ChangesetRepository {
             try updateHeadUUID(db, uuid: nil)
             try deleteChangesetAll(db)
         }
+        Logger.sqliteChangesetSync.info("ChangesetRepository reset")
     }
 }
 
+@available(iOS 14.0, *)
 extension ChangesetRepository {
     /// Provides a read-only access to the database.
     public var reader: any GRDB.DatabaseReader {
@@ -79,6 +83,7 @@ extension ChangesetRepository {
 
 // MARK: - Repository Operations
 
+@available(iOS 14.0, *)
 extension ChangesetRepository {
     public func commit<T>(meta: String = "{}", _ updates: (Database) throws -> T) throws -> T{
         try dbWriter.write { db in
@@ -110,20 +115,21 @@ extension ChangesetRepository {
         }
     }
     
-    public func pull() throws -> Bool {
-        var changeSetApplied = false
+    public func pull() throws -> Changeset? {
+        var changeset: Changeset?
         try dbWriter.write { db in
             while true {
                 // 1. Search for a child changeset
                 let head = try selectHeadUUID(db)
-                guard let child = try selectChangesetChild(db, uuid: head) else { break }
+                changeset = try selectChangesetChild(db, uuid: head)
+                guard let changeset = changeset else { break }
                 
                 // 2. Create ChangesetData
                 let data: Data?
-                if child.parent_uuid == head {
-                    data = child.parent_changeset
+                if changeset.parent_uuid == head {
+                    data = changeset.parent_changeset
                 } else {
-                    data = child.merge_changeset
+                    data = changeset.merge_changeset
                 }
                 
                 // 3. Apply Changeset to Database
@@ -133,19 +139,24 @@ extension ChangesetRepository {
                 }
                 
                 // 4. Update head UUID
-                try updateHeadUUID(db, uuid: child.uuid)
-                changeSetApplied = true
+                try updateHeadUUID(db, uuid: changeset.uuid)
             }
-            if changeSetApplied {
+            if changeset != nil {
                 try db.notifyChanges(in: .fullDatabase)
             }
         }
-        return changeSetApplied
+        if let changeset = changeset {
+            Logger.sqliteChangesetSync.info("Pulled head=\(changeset.uuid)")
+        } else {
+            Logger.sqliteChangesetSync.info("No children to pull to")
+        }
+        return changeset
     }
 }
 
 // MARK: - Merging
 
+@available(iOS 14.0, *)
 extension ChangesetRepository {
     private func branchChangesetData(_ db: Database, _ mainUUID: String, _ branchUUID: String) throws -> (changesets: [Changeset], combinedData: ChangesetData?) {
         let changesets = try selectChangesetBranches(db, mainUUID: mainUUID, branchUUID: branchUUID)
@@ -168,7 +179,7 @@ extension ChangesetRepository {
             let metaDictionary = ["parent": parentUUIDs, "merge": mergeUUIDs]
             let metaJsonData = try JSONSerialization.data(withJSONObject: metaDictionary)
             let meta = String(data: metaJsonData, encoding: .utf8)
-
+            
             let changeset = Changeset(
                 uuid: UUID().uuidString,
                 parent_uuid: mainUUID,
@@ -179,18 +190,24 @@ extension ChangesetRepository {
                 meta: meta ?? "{}"
             )
             try insertChangeset(db, changeset: changeset)
+            Logger.sqliteChangesetSync.info("Merged \(mainUUID) \(branchUUID)")
             return changeset
         }
     }
     
     public func mergeAll() throws {
-            while true {
-                let leafNodes = try dbWriter.read { db in
-                    try selectChangesetLeaves(db)
-                }
-                guard (leafNodes.count >= 2) else { break }
-                let _ = try merge(leafNodes[0].uuid, leafNodes[1].uuid)
+        var count = 0
+        while true {
+            let leafNodes = try dbWriter.read { db in
+                try selectChangesetLeaves(db)
             }
+            guard (leafNodes.count >= 2) else { break }
+            let mainUUID: String = leafNodes[0].uuid
+            let branchUUID: String = leafNodes[1].uuid
+            _ = try merge(mainUUID, branchUUID)
+            count += 1
+        }
+        Logger.sqliteChangesetSync.info("Merged \(count) changesets")
     }
     
     private func decodeJSONStrings(_ jsonStrings: [String]) -> [Any] {
@@ -203,6 +220,7 @@ extension ChangesetRepository {
 
 // MARK: Database Access Methods
 
+@available(iOS 14.0, *)
 extension ChangesetRepository {
     private func selectHeadUUID(_ db: Database) throws -> String? {
         return try Head.fetchOne(db)!.uuid
@@ -349,13 +367,14 @@ extension ChangesetRepository {
     }
 }
 
+@available(iOS 14.0, *)
 private struct ChangesetRepositoryKey: EnvironmentKey {
     /// The default appDatabase is an empty in-memory repository.
     static let defaultValue = ChangesetRepository.empty()
 }
 
 @available(macOS 10.15, *)
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 public extension EnvironmentValues {
     var changesetRepository: ChangesetRepository {
         get { self[ChangesetRepositoryKey.self] }

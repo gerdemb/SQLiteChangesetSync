@@ -9,6 +9,7 @@ import Foundation
 import GRDB
 import CloudKit
 import SwiftUI
+import OSLog
 
 enum Config {
     /// iCloud container identifier.
@@ -40,6 +41,7 @@ public class CloudKitManager {
         try await createZoneIfNeeded()
         try await createSubscriptionIfNeeded()
         isSetup = true
+        Logger.sqliteChangesetSync.info("CloudKit setup")
     }
     
     public func reset() async throws {
@@ -52,7 +54,8 @@ public class CloudKitManager {
         UserDefaults.standard.removeObject(forKey: "isZoneCreated")
         UserDefaults.standard.removeObject(forKey: "isSubscribed")
         resetLastChangeToken()
-        
+        Logger.sqliteChangesetSync.info("CloudKit reset")
+
         try await setup()
     }
     
@@ -61,14 +64,14 @@ public class CloudKitManager {
         loadLastChangeToken()
     }
     
-    public static let dummy = { try! CloudKitManager(DatabaseQueue()) }
+    public static let dummy = { try! CloudKitManager(DatabaseQueue()) }    
 }
 
 // MARK: - Operations
 
 @available(iOS 15.0, *)
 extension CloudKitManager {
-    public func push() async throws {
+    public func push() async throws -> [Changeset] {
         if !isSetup { try await setup() }
         
         // 1. Select Changesets that have not been pushed
@@ -92,7 +95,11 @@ extension CloudKitManager {
                 let ckError = error as? CKError
                 switch ckError?.code {
                 case .serverRecordChanged:
-                    debugPrint("Record already exists \(error)")
+                    // Record has already been pushed. This could happen if there is an error between
+                    // saving the record to CloudKit and updating the local database to show the
+                    // changeset as pushed. We'll ignore this error and keep processing. Changeset
+                    // will be updated as pushed in following code
+                    Logger.sqliteChangesetSync.warning("Changeset has already been pushed \(error) \(String(describing: changeset)) ")
                 default:
                     throw error
                 }
@@ -103,9 +110,11 @@ extension CloudKitManager {
                 }
             }
         }
+        Logger.sqliteChangesetSync.info("Pushed \(changesets.count) changesets")
+        return changesets
     }
         
-        public func fetch() async throws {
+        public func fetch() async throws -> [Changeset] {
             if !isSetup { try await setup() }
             var awaitingChanges = true
             var newChangesets: [Changeset] = []
@@ -137,7 +146,7 @@ extension CloudKitManager {
                             newChangesets.append(changeset)
                         }
                     case .failure(let error):
-                        debugPrint("CloudKit error \(error)")
+                        Logger.sqliteChangesetSync.error("CloudKit error \(error)")
                     }
                 }
                 
@@ -153,6 +162,8 @@ extension CloudKitManager {
                     try insertChangeset(db, changeset: changeset)
                 }
             }
+            Logger.sqliteChangesetSync.info("Fetched \(newChangesets.count) changesets")
+            return newChangesets
         }
     }
     

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct PullButton: View {
     @Environment(\.changesetRepository) private var changesetRepository
@@ -17,7 +18,11 @@ struct PullButton: View {
     
     var body: some View {
         Button {
-            _ = try! changesetRepository.pull()
+            do {
+                _ = try changesetRepository.pull()
+            } catch {
+                Logger.sqliteChangesetSyncDemo.error("Pull error \(error)")
+            }
         } label: {
             Label(titleKey, systemImage: "plus")
         }
@@ -34,7 +39,11 @@ struct MergeButton: View {
     
     var body: some View {
         Button {
-            _ = try! changesetRepository.mergeAll()
+            do {
+                _ = try changesetRepository.mergeAll()
+            } catch {
+                Logger.sqliteChangesetSyncDemo.error("Merge error \(error)")
+            }
         } label: {
             Label(titleKey, systemImage: "plus")
         }
