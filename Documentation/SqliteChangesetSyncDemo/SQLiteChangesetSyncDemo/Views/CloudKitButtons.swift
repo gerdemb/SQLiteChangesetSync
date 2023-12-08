@@ -18,7 +18,11 @@ struct PushButton: View {
     var body: some View {
         Button {
             Task {
-                try! await cloudKitManager.push()
+                do {
+                    try await cloudKitManager.push()
+                } catch {
+                    debugPrint("CloudKit error \(error)")
+                }
             }
         } label: {
             Label(titleKey, systemImage: "plus")
@@ -37,7 +41,11 @@ struct FetchButton: View {
     var body: some View {
         Button {
             Task {
-                try! await cloudKitManager.fetch()
+                do {
+                    try await cloudKitManager.fetch()
+                } catch {
+                    debugPrint("CloudKit error \(error)")
+                }
             }
         } label: {
             Label(titleKey, systemImage: "plus")

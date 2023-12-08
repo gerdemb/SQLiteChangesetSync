@@ -17,7 +17,7 @@ struct PlayerFormView: View {
         do {
             var updatedPlayer = player
             transform(&updatedPlayer.score)
-            try playerRepository.update(player)
+            try playerRepository.update(updatedPlayer)
         } catch RecordError.recordNotFound {
             // Oops, player does not exist.
             // Ignore this error: `PlayerEditionView` will dismiss.
