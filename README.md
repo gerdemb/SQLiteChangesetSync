@@ -2,11 +2,19 @@
 
 SQLiteChangesetSync is a Swift package that enables the synchronization of SQLite databases across multiple devices by leveraging the [SQLite Session Extension](https://www.sqlite.org/sessionintro.html). It primarily focuses on an offline-first approach, allowing changes to be captured as binary data blobs in a `changeset` table within the SQLite database. After being committed, these changesets can be pushed to, and fetched from a remote repository, and then merged into local databases. This functionality mirrors key actions of git, adapting them to the context of database synchronization. The package is designed for scenarios requiring consistent data across different instances, particularly useful in environments with intermittent network connectivity.
 
-2. Features
+- [ ] Note experimental nature
 
-Detailed description of key features
-Explanation of how these features interact with SQLite databases
-Highlighting the offline-first and flexible approach
+# Features
+
+- Git-Like Operations: Supports operations akin to git, including:
+  - **Commit**: Saves a new changeset upon database modification.
+  - **Push**: Transfers unpushed changesets to a remote repository.
+  - **Fetch**: Retrieves new changesets from a remote source.
+  - **Pull**: Applies changesets to the local database to synchronize with the latest state.
+  - **Merge**: Combines changes from different branches into the current branch.
+- CloudKit Integration: Includes an example implementation using CloudKit, demonstrating remote repository synchronization.
+- Easy to Integrate: Structured for straightforward integration into existing Swift projects with SQLite databases.
+
 3. Getting Started
 
 Pre-requisites for installation
