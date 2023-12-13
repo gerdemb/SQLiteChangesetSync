@@ -17,7 +17,9 @@ _Note_: This package is an experimental concept that I've developed and am excit
 
 # Running the Demo
 
-A demo iOS app `SQLiteChangesetSyncDemo` is included in the package. To enable CloudKit support, edit the `CloudKitConfig` settings in `SQLiteChangesetSyncDemoApp.swift`. The app UI is pretty basic, so please watch the app log to see the results of each operation. There are two targets in the project `SQLiteChangesetSyncDemoApp` and `SQLiteChangesetSyncDemoAppCopy". It is possible to run each target on a separate simulator and experiment with syncing data between the two instances.
+![Screenshot](screenshot.png "Screenshot")
+
+A demo iOS app `SQLiteChangesetSyncDemo` is included in the package. To enable CloudKit support, edit the `CloudKitConfig` settings in `SQLiteChangesetSyncDemoApp.swift`. The app UI is basic, so please watch the app log to see the results of each operation. There are two identical targets in the project `SQLiteChangesetSyncDemoApp` and `SQLiteChangesetSyncDemoAppCopy". It is possible to run each target on a separate simulator and experiment with syncing data between the two instances.
 
 The demo depends on the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQuery](https://github.com/groue/GRDBQuery) packages.
 
@@ -38,11 +40,11 @@ The demo depends on the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQue
 
 ## Package Dependencies
 
-- [GRDB](https://github.com/groue/GRDB.swift) For ease of implementation, `GRDB` is used for database operations. _NOTE_: `GRDB` is not a strict requirement and a version of the package could be developed without depending on `GRDB` and using low-level SQLite functions instead.
+- [GRDB](https://github.com/groue/GRDB.swift) For ease of implementation, `GRDB` is used for database operations. _NOTE_: `GRDB` is not a strict requirement and a version of the package could be developed without depending on `GRDB` using low-level SQLite functions instead.
 
 ## Integrating in your Project
 
-The best place to understand how to integrate the package is by reviewing the included demo app `SQLiteChangesetSyncDemo`. Roughly, to get started, add the following to your APP init:
+The best place to understand how to integrate the package is by reviewing the included demo app `SQLiteChangesetSyncDemo`. To get started, add the following to your APP init:
 
 ```
             self.changesetRepository = try ChangesetRepository(dbWriter)
@@ -81,18 +83,14 @@ Flow diagrams or architecture charts (if applicable)
 
 # Contributing
 
-Contributions (comments,issues, pull requests, etc.) are very welcome!
-
-# License
-
-License information for the package
+Comments,issues, pull requests, etc. are very welcome!
 
 # Acknowledgements
 
-Credits to contributors and acknowledgments
+This idea would not have been possible, without building on the incredible work done in the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQuery](https://github.com/groue/GRDBQuery) packages.
 
 # Contact Information
 
-You can contact me 
+Github: [Github](https://github.com/gerdemb)
+Twitter: [Twitter](https://twitter.com/gerdemb)
 
-Ways to reach out for support or inquiries
