@@ -17,24 +17,43 @@ enum Config {
     static let containerIdentifier = "iCloud.com.github.gerdemb.SQLiteChangesetSyncDemo"
 }
 
+public struct CloudKitManagerConfig {
+    let database: CKDatabase
+    let zone: CKRecordZone
+    let subscriptionID: String
+    
+    public init(database: CKDatabase, zone: CKRecordZone, subscriptionID: String) {
+        self.database = database
+        self.zone = zone
+        self.subscriptionID = subscriptionID
+    }
+    
+    public static func dummy() -> CloudKitManagerConfig {
+        let container = CKContainer(identifier: "dummy-identifier")
+        let database = container.privateCloudDatabase
+        let zone = CKRecordZone(zoneName: "dummy-zone")
+        let subscriptionID = "dummy-subscription-id"
+        return CloudKitManagerConfig(database: database, zone: zone, subscriptionID: subscriptionID)
+    }
+}
+
 // MARK: - Setup
 
 @available(iOS 15.0, *)
 public class CloudKitManager {
-    private let container = CKContainer(identifier: Config.containerIdentifier)
-    private let zone = CKRecordZone(zoneName: "ChangeSets")
-    private let subscriptionID = "changeset-subscription-id"
-    private let cloudDatabase: CKDatabase
-    
-    private var lastChangeToken: CKServerChangeToken?
-    private(set) public var isSetup = false
-    
-    public init(_ dbWriter: some GRDB.DatabaseWriter) {
+    public init(_ dbWriter: some GRDB.DatabaseWriter, config: CloudKitManagerConfig) {
         self.dbWriter = dbWriter
-        cloudDatabase = container.privateCloudDatabase
+        self.cloudDatabase = config.database
+        self.zone = config.zone
+        self.subscriptionID = config.subscriptionID
     }
     
     private let dbWriter: any DatabaseWriter
+    private let cloudDatabase: CKDatabase
+    private let zone: CKRecordZone
+    private let subscriptionID: String
+    private var lastChangeToken: CKServerChangeToken?
+    private(set) public var isSetup = false
     
     public func setup() async throws {
         loadLastChangeToken()
@@ -55,7 +74,7 @@ public class CloudKitManager {
         UserDefaults.standard.removeObject(forKey: "isSubscribed")
         resetLastChangeToken()
         Logger.sqliteChangesetSync.info("CloudKit reset")
-
+        
         try await setup()
     }
     
@@ -64,7 +83,7 @@ public class CloudKitManager {
         loadLastChangeToken()
     }
     
-    public static let dummy = { try! CloudKitManager(DatabaseQueue()) }    
+    public static let dummy = { try! CloudKitManager(DatabaseQueue(), config: CloudKitManagerConfig.dummy()) }
 }
 
 // MARK: - Operations
@@ -113,153 +132,153 @@ extension CloudKitManager {
         Logger.sqliteChangesetSync.info("Pushed \(changesets.count) changesets")
         return changesets
     }
+    
+    public func fetch() async throws -> [Changeset] {
+        if !isSetup { try await setup() }
+        var awaitingChanges = true
+        var newChangesets: [Changeset] = []
         
-        public func fetch() async throws -> [Changeset] {
-            if !isSetup { try await setup() }
-            var awaitingChanges = true
-            var newChangesets: [Changeset] = []
+        while awaitingChanges {
+            // 1. Find new changes from CloudKit
+            let changes = try await cloudDatabase.recordZoneChanges(inZoneWith: zone.zoneID, since: lastChangeToken)
             
-            while awaitingChanges {
-                // 1. Find new changes from CloudKit
-                let changes = try await cloudDatabase.recordZoneChanges(inZoneWith: zone.zoneID, since: lastChangeToken)
-                
-                // 2. Iterate through new change sets
-                for change in changes.modificationResultsByID {
-                    switch change.value {
-                    case .success(let modification):
-                        let record = modification.record
-                        let uuid = record.recordID.recordName
-                        let found = try await dbWriter.read { [self] db in
-                            try selectChangesetByUUID(db, uuid: uuid)
-                        }
-                        // 3. If changeset is new, add it to newChangesets
-                        if found == nil {
-                            let changeset = Changeset(
-                                uuid: uuid,
-                                parent_uuid: record["parent_uuid"],
-                                parent_changeset: record["parent_changeset"],
-                                merge_uuid: record["merge_uuid"],
-                                merge_changeset: record["merge_changeset"],
-                                pushed: true,
-                                meta: record["meta"] as? String ?? "{}"
-                            )
-                            newChangesets.append(changeset)
-                        }
-                    case .failure(let error):
-                        Logger.sqliteChangesetSync.error("CloudKit error \(error)")
+            // 2. Iterate through new change sets
+            for change in changes.modificationResultsByID {
+                switch change.value {
+                case .success(let modification):
+                    let record = modification.record
+                    let uuid = record.recordID.recordName
+                    let found = try await dbWriter.read { [self] db in
+                        try selectChangesetByUUID(db, uuid: uuid)
                     }
+                    // 3. If changeset is new, add it to newChangesets
+                    if found == nil {
+                        let changeset = Changeset(
+                            uuid: uuid,
+                            parent_uuid: record["parent_uuid"],
+                            parent_changeset: record["parent_changeset"],
+                            merge_uuid: record["merge_uuid"],
+                            merge_changeset: record["merge_changeset"],
+                            pushed: true,
+                            meta: record["meta"] as? String ?? "{}"
+                        )
+                        newChangesets.append(changeset)
+                    }
+                case .failure(let error):
+                    Logger.sqliteChangesetSync.error("CloudKit error \(error)")
                 }
-                
-                saveChangeToken(changes.changeToken)
-                
-                awaitingChanges = changes.moreComing
             }
             
-            // 4. Insert all new changesets
-            let changesetsToInsert = newChangesets
-            try await dbWriter.write { [self] db in
-                for changeset in changesetsToInsert {
-                    try insertChangeset(db, changeset: changeset)
-                }
-            }
-            Logger.sqliteChangesetSync.info("Fetched \(newChangesets.count) changesets")
-            return newChangesets
+            saveChangeToken(changes.changeToken)
+            
+            awaitingChanges = changes.moreComing
         }
+        
+        // 4. Insert all new changesets
+        let changesetsToInsert = newChangesets
+        try await dbWriter.write { [self] db in
+            for changeset in changesetsToInsert {
+                try insertChangeset(db, changeset: changeset)
+            }
+        }
+        Logger.sqliteChangesetSync.info("Fetched \(newChangesets.count) changesets")
+        return newChangesets
+    }
+}
+
+// MARK: - Database Helpers
+
+@available(iOS 15.0, *)
+extension CloudKitManager {
+    private func selectChangesetByUUID(_ db: Database, uuid: String) throws -> Changeset? {
+        return try Changeset.fetchOne(db, key: uuid)
     }
     
-    // MARK: - Database Helpers
-    
-    @available(iOS 15.0, *)
-    extension CloudKitManager {
-        private func selectChangesetByUUID(_ db: Database, uuid: String) throws -> Changeset? {
-            return try Changeset.fetchOne(db, key: uuid)
-        }
-        
-        private func insertChangeset(_ db: Database, changeset: Changeset) throws {
-            try changeset.insert(db)
-        }
-        
-        private func selectChangesetNotPushed(_ db: Database) throws -> [Changeset] {
-            return try Changeset.filter(Column("pushed") == false).fetchAll(db)
-        }
-        
-        private func updateChangesetSetPushed(_ db: Database, uuid: String) throws {
-            try Changeset.filter(key: uuid).updateAll(db, [Column("pushed").set(to: true)])
-        }
+    private func insertChangeset(_ db: Database, changeset: Changeset) throws {
+        try changeset.insert(db)
     }
     
-    // MARK: - CloudKit Helpers
+    private func selectChangesetNotPushed(_ db: Database) throws -> [Changeset] {
+        return try Changeset.filter(Column("pushed") == false).fetchAll(db)
+    }
     
-    @available(iOS 15.0, *)
-    extension CloudKitManager {
-        private func loadLastChangeToken() {
-            guard let data = UserDefaults.standard.data(forKey: "lastChangeToken") else {
-                lastChangeToken = nil
-                return
-            }
-            
-            lastChangeToken = try? NSKeyedUnarchiver.unarchivedObject(ofClass: CKServerChangeToken.self, from: data)
+    private func updateChangesetSetPushed(_ db: Database, uuid: String) throws {
+        try Changeset.filter(key: uuid).updateAll(db, [Column("pushed").set(to: true)])
+    }
+}
+
+// MARK: - CloudKit Helpers
+
+@available(iOS 15.0, *)
+extension CloudKitManager {
+    private func loadLastChangeToken() {
+        guard let data = UserDefaults.standard.data(forKey: "lastChangeToken") else {
+            lastChangeToken = nil
+            return
         }
         
-        private func saveChangeToken(_ token: CKServerChangeToken) {
-            let tokenData = try! NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: true)
-            
-            lastChangeToken = token
-            UserDefaults.standard.set(tokenData, forKey: "lastChangeToken")
+        lastChangeToken = try? NSKeyedUnarchiver.unarchivedObject(ofClass: CKServerChangeToken.self, from: data)
+    }
+    
+    private func saveChangeToken(_ token: CKServerChangeToken) {
+        let tokenData = try! NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: true)
+        
+        lastChangeToken = token
+        UserDefaults.standard.set(tokenData, forKey: "lastChangeToken")
+    }
+    
+    private func createZoneIfNeeded() async throws {
+        // Avoid the operation if this has already been done.
+        guard !UserDefaults.standard.bool(forKey: "isZoneCreated") else {
+            return
         }
         
-        private func createZoneIfNeeded() async throws {
-            // Avoid the operation if this has already been done.
-            guard !UserDefaults.standard.bool(forKey: "isZoneCreated") else {
-                return
-            }
-            
-            do {
-                _ = try await cloudDatabase.modifyRecordZones(saving: [zone], deleting: [])
-            } catch {
-                print("ERROR: Failed to create custom zone: \(error.localizedDescription)")
-                throw error
-            }
-            
-            UserDefaults.standard.setValue(true, forKey: "isZoneCreated")
+        do {
+            _ = try await cloudDatabase.modifyRecordZones(saving: [zone], deleting: [])
+        } catch {
+            print("ERROR: Failed to create custom zone: \(error.localizedDescription)")
+            throw error
         }
         
-        private func createSubscriptionIfNeeded() async throws {
-            guard !UserDefaults.standard.bool(forKey: "isSubscribed") else {
-                return
-            }
-            
-            // First check if the subscription has already been created.
-            // If a subscription is returned, we don't need to create one.
-            let foundSubscription = try? await cloudDatabase.subscription(for: subscriptionID)
-            guard foundSubscription == nil else {
-                UserDefaults.standard.setValue(true, forKey: "isSubscribed")
-                return
-            }
-            
-            // No subscription created yet, so create one here, reporting and passing along any errors.
-            let subscription = CKRecordZoneSubscription(zoneID: zone.zoneID, subscriptionID: subscriptionID)
-            let notificationInfo = CKSubscription.NotificationInfo()
-            notificationInfo.shouldSendContentAvailable = true
-            subscription.notificationInfo = notificationInfo
-            
-            _ = try await cloudDatabase.modifySubscriptions(saving: [subscription], deleting: [])
+        UserDefaults.standard.setValue(true, forKey: "isZoneCreated")
+    }
+    
+    private func createSubscriptionIfNeeded() async throws {
+        guard !UserDefaults.standard.bool(forKey: "isSubscribed") else {
+            return
+        }
+        
+        // First check if the subscription has already been created.
+        // If a subscription is returned, we don't need to create one.
+        let foundSubscription = try? await cloudDatabase.subscription(for: subscriptionID)
+        guard foundSubscription == nil else {
             UserDefaults.standard.setValue(true, forKey: "isSubscribed")
+            return
         }
+        
+        // No subscription created yet, so create one here, reporting and passing along any errors.
+        let subscription = CKRecordZoneSubscription(zoneID: zone.zoneID, subscriptionID: subscriptionID)
+        let notificationInfo = CKSubscription.NotificationInfo()
+        notificationInfo.shouldSendContentAvailable = true
+        subscription.notificationInfo = notificationInfo
+        
+        _ = try await cloudDatabase.modifySubscriptions(saving: [subscription], deleting: [])
+        UserDefaults.standard.setValue(true, forKey: "isSubscribed")
     }
-    
-    // MARK: - SwiftUI
-    
-    @available(iOS 15.0, *)
-    private struct CloudKitManagerKey: EnvironmentKey {
-        /// The default appDatabase is an empty in-memory repository.
-        static let defaultValue = CloudKitManager.dummy()
+}
+
+// MARK: - SwiftUI
+
+@available(iOS 15.0, *)
+private struct CloudKitManagerKey: EnvironmentKey {
+    /// The default appDatabase is an empty in-memory repository.
+    static let defaultValue = CloudKitManager.dummy()
+}
+
+@available(iOS 15.0, *)
+public extension EnvironmentValues {
+    var cloudKitManager: CloudKitManager {
+        get { self[CloudKitManagerKey.self] }
+        set { self[CloudKitManagerKey.self] = newValue }
     }
-    
-    @available(iOS 15.0, *)
-    public extension EnvironmentValues {
-        var cloudKitManager: CloudKitManager {
-            get { self[CloudKitManagerKey.self] }
-            set { self[CloudKitManagerKey.self] = newValue }
-        }
-    }
+}

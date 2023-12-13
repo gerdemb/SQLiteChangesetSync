@@ -36,6 +36,7 @@
 		8A5D06712B230A6700DA5F21 /* ChangesetMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D066F2B230A6700DA5F21 /* ChangesetMeta.swift */; };
 		8A71C2782B23CDE800BC0475 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A71C2772B23CDE800BC0475 /* Logger.swift */; };
 		8A9349E82B21F34D0085F4DD /* ChangesetButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9349E72B21F34D0085F4DD /* ChangesetButtons.swift */; };
+		8A9814AE2B2899AB00ABF272 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A71C2772B23CDE800BC0475 /* Logger.swift */; };
 		8ACA6CD02B220D16008B997F /* CloudKitButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA6CCF2B220D16008B997F /* CloudKitButtons.swift */; };
 		8ACA6CDA2B223FEA008B997F /* PlayerRepository+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */; };
 		8ACA6CDB2B223FEA008B997F /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F8A18A273802970011ACBE /* AppView.swift */; };
@@ -88,7 +89,6 @@
 		56519D95274D629600ED16D8 /* PlayerFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFormView.swift; sourceTree = "<group>"; };
 		56519DB4274EAC7400ED16D8 /* PlayerRepository+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerRepository+App.swift"; sourceTree = "<group>"; };
 		56519DB6274EAFD700ED16D8 /* DatabaseButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseButtons.swift; sourceTree = "<group>"; };
-		56519DBA274EC7C300ED16D8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		56F8A185273802970011ACBE /* SQLiteChangesetSyncDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLiteChangesetSyncDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F8A188273802970011ACBE /* SQLiteChangesetSyncDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteChangesetSyncDemoApp.swift; sourceTree = "<group>"; };
 		56F8A18A273802970011ACBE /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
@@ -174,7 +174,6 @@
 		56F8A17C273802970011ACBE = {
 			isa = PBXGroup;
 			children = (
-				56519DBA274EC7C300ED16D8 /* README.md */,
 				56F8A187273802970011ACBE /* SQLiteChangesetSyncDemo */,
 				56F8A198273802980011ACBE /* SQLiteChangesetSyncDemoTests */,
 				56F8A1A2273802980011ACBE /* SQLiteChangesetSyncDemoUITests */,
@@ -490,6 +489,7 @@
 				8ACA6CE32B223FEA008B997F /* ChangesetButtons.swift in Sources */,
 				8ACA6CE42B223FEA008B997F /* PlayerEditionView.swift in Sources */,
 				8ACA6CE52B223FEA008B997F /* Player+App.swift in Sources */,
+				8A9814AE2B2899AB00ABF272 /* Logger.swift in Sources */,
 				8ACA6CE62B223FEA008B997F /* SQLiteChangesetSyncDemoApp.swift in Sources */,
 				8ACA6CE72B223FEA008B997F /* PlayerRepository.swift in Sources */,
 				8ACA6CE82B223FEA008B997F /* CloudKitButtons.swift in Sources */,

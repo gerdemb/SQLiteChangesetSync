@@ -89,7 +89,11 @@ struct ResetCloudKitButton: View {
     var body: some View {
         Button {
             Task {
-                try! await cloudKitManager.reset()
+                do {
+                    try await cloudKitManager.reset()
+                } catch {
+                    Logger.sqliteChangesetSyncDemo.error("\(error)")
+                }
             }
         } label: {
             Label(titleKey, systemImage: "plus")
