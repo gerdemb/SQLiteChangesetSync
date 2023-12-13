@@ -41,7 +41,6 @@ struct AppView: View {
             .sheet(item: $editedPlayer) { player in
                 PlayerEditionView(uuid: player.uuid)
             }
-            .navigationTitle("@Query Demo")
         }
     }
     
