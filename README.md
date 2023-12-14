@@ -200,18 +200,77 @@ Asynchronously fetches changesets from CloudKit. This function retrieves new cha
 
 # How It Works
 
-Technical explanation of the underlying mechanisms
-Description of the SQLite Session Extension and changeset handling
-Flow diagrams or architecture charts (if applicable)
+## Underlying Mechanisms
+SQLiteChangesetSync is built upon the foundation of the [SQLite Session Extension](https://www.sqlite.org/sessionintro.html), which is a powerful tool for tracking changes in an SQLite database. The extension captures modifications (inserts, updates, deletes) made to the database tables and records them as changesets. These changesets are essentially a collection of the changes made during a database session. `SQLiteChangesetSync` takes these changesets and stores them in a specialized `changeset` table as a binary representation of the database modifications.
 
+SQLiteChangesetSync uses this functionality to implement a version control-like system for the database. Each changeset acts like a 'commit', capturing a modification of the database at a certain point in time. These changesets can then be used to synchronize the state of the database across different devices or platforms.
+
+## Synchronization Process
+- *Commit*: When a database is modified, the Session Extension captures these changes, and SQLiteChangesetSync commits them as a new entry in the 'changeset' table with a reference to the UUID of the parent commit.
+- *Push and Fetch*: These changesets can be pushed to a remote repository (like a server or cloud service). Similarly, changesets from other sources can be fetched and stored locally. Like git, changesets have unique UUID values and once created are read-only simplifying the syncing process with a remote repository.
+- *Pull*: The local database can then 'pull' these changesets, applying them to reach the latest state. 
+
+## Branches
+There is no explict branch operation. If each local database has the same synced set of changesets (by fetching and then pulling) before a commit then the local databases will be on the same "branch". A branch will occur when two different local databases both create a commit with the same parent. Some exapmles:
+
+- **Example 1**: No Branching
+| Database A                | Database B        |
+| Commit Change #1          |                   |
+| Push Change #1            |                   |
+|                           | Fetch Change #1   |
+|                           | Pull              |
+|                           | Commit Change #2  |
+|                           | Push Change #2    |
+| Fetch Change #2           |                   |
+| Pull                      |                   |
+
+```
+Root
+    |
+Change #1
+    |
+Change #2 <-- HEAD (A,B)
+```
+
+- **Example 2**: Branching
+| Database A                | Database B        |
+| Commit Change #1          | Commit Change #2  |
+| Push Change #1            | Push Change #2    |
+| Fetch Change #2           | Fetch Change #1 |
+
+```
+Root
+    |
+    |--- Change #1 <-- HEAD (A)
+    |
+    |--- Change #2 <-- HEAD (B)
+```
+
+
+## Merging
+Continuing with Example 2 from above, we have implicitedly created a branch from the root node with Change #1 and Change #2 sharing the same parent. Subsequent commits made by each database will add additional changeset records to each branch. Pushing and fetching will sync the changeset data, but not the application data.
+
+To solve, this problem we need to merge the two branches. After merging, the repository will look like this:
+
+Root
+    |
+    |--- Change #1 -----|
+    |                   |
+    |--- Change #2 -----|
+                        |
+                        |--- Merge #1 + #2 <-- HEAD (A,B)
+```
+
+- *Merge All*: Repeatedly create merge commits for all branches into a single branch. Branches are defined as "leaf node" changesets that have no children. Merging does not apply the changes. To update to the newly created branch, run pull. _Note_: Like regulars commits, merge commits can be pushed and fetched. The difference between a merge commit and a regular commit is that a merge commit has two parents and and two binary blobs of the database modifications to apply depending on which parent a pull operation comes from.
 
 # Future Exploration
 - **Performance**: Investigation the performance of this architecture on larger projects
 - **Schema Migrations**: There is currently no support for schema migrations
+- **Handling conflicts**: Better support for the application to handle merge conflicts
 
 # Contributing
 
-Comments,issues, pull requests, etc. are very welcome!
+[Discussions](https://github.com/gerdemb/SQLiteChangesetSync/discussions/1), [issues](https://github.com/gerdemb/SQLiteChangesetSync/issues), [pull requests](https://github.com/gerdemb/SQLiteChangesetSync/pulls), etc. are very welcome!
 
 # Acknowledgements
 
