@@ -10,16 +10,16 @@ _Note_: This package is an experimental concept that I've developed and am excit
 - **Simple Requirements**: Only requirement is that SQLite has been compiled with the [SQLite Session Extension](https://www.sqlite.org/sessionintro.html). This extension is included by default in the versions of SQLite distributed with MacOS and iOS.
 - **Simple Integration**: Works with existing SQLite databases, and requires only minimal modifications to the existing database structure or application code.
 - **Efficient Data Synchronization**: The use of changesets for recording database modifications allows for efficient data transfer when syncing, as only the changes are transmitted rather than the entire database.
-- **Flexible Data Synchronization**: An example of using a CloudKit database to sync changesets is included, but the package’s design allows for easy adaptation to different backend services for syncing. Like git commits, changesets are idepontent and have unique UUIDs making syncing them simple.
-- **Flexible Sync Timing**: Syncing of changeset data is independent of syncing of application data. Like git, pushing or fetching changeset data to or from the backend service does not effect the application data. Pushing and fetching could be scheduled with a timer in or in response to notification events that new data is available to fetch. The application can later choose to apply the new changesets when desired.
+- **Flexible Data Synchronization**: An example of using a CloudKit database to sync changesets is included, but the package’s design allows for easy adaptation to different backend services (cloud services, other databases, etc.) for syncing. Like git commits, changesets are idempotent and have unique UUIDs making syncing them simple.
+- **Flexible Sync Timing**: Syncing of changeset data is independent of syncing of application data. Like git, pushing or fetching changeset data to or from the backend service does not affect the application data. Pushing and fetching could be scheduled with a timer or in response to notification events that new data is available to fetch. The application can later choose to apply the new changesets when desired.
 - **Granular Change Tracking**: Similar to version control systems, this method offers detailed tracking of each modification, enabling precise control and understanding of database evolution over time.
-- **Flexible Conflict Resolution**: The git-like functionality (merge, pull, etc.) provides a structured way to handle conflicts that may arise when different instances of the database are modified independently. Applications can define their own conflict resolution logic with full access to the database at the state of conflict.
+- **Flexible Conflict Resolution**: The git-like functionality (merge, pull, etc.) provides a structured way to handle conflicts that may arise when different instances of the database are modified independently. _Future Development_: Allow applications to define their own conflict resolution logic with full access to the database at the state of conflict.
 
 # Running the Demo
 
 ![Screenshot](screenshot.png "Screenshot")
 
-A demo iOS app `SQLiteChangesetSyncDemo` is included in the package. To enable CloudKit support, edit the `CloudKitConfig` settings in `SQLiteChangesetSyncDemoApp.swift`. The app UI is basic, so please watch the app log to see the results of each operation. There are two identical targets in the project `SQLiteChangesetSyncDemoApp` and `SQLiteChangesetSyncDemoAppCopy". It is possible to run each target on a separate simulator and experiment with syncing data between the two instances.
+A demo iOS app `SQLiteChangesetSyncDemo` is included in the package. To enable CloudKit support, edit the `CloudKitConfig` settings in `SQLiteChangesetSyncDemoApp.swift`. The app UI is basic, so please watch the app log to see the results of each operation. There are two identical targets in the project `SQLiteChangesetSyncDemoApp` and `SQLiteChangesetSyncDemoAppCopy`. It is possible to run each target on a separate simulator and experiment with syncing data between the two instances.
 
 The demo depends on the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQuery](https://github.com/groue/GRDBQuery) packages.
 
@@ -46,13 +46,15 @@ The demo depends on the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQue
 
 The best place to understand how to integrate the package is by reviewing the included demo app `SQLiteChangesetSyncDemo`. To get started, add the following to your APP init:
 
+[SQLiteChangesetSyncDemoApp.swift](https://github.com/gerdemb/SQLiteChangesetSync/blob/main/Documentation/SQLiteChangesetSyncDemo/SQLiteChangesetSyncDemo/SQLiteChangesetSyncDemoApp.swift)
+
 ```
 self.changesetRepository = try ChangesetRepository(dbWriter)
 self.cloudKitManager = CloudKitManager(dbWriter, config: SQLiteChangesetSyncDemo.getCloudKitManagerConfig())
 self.playerRepository = try PlayerRepository(changesetRepository)
 ```
 
-and then pass them to your views as enviroment objects like this:
+and then pass them to your views as environment objects like this:
 
 ```
 .environment(\.changesetRepository, changesetRepository)
@@ -61,6 +63,8 @@ and then pass them to your views as enviroment objects like this:
 ```
 
 finally, modify all `database.write()` calls to use `changesetRepository.commit()` instead:
+
+[PlayerRepository.swift](https://github.com/gerdemb/SQLiteChangesetSync/blob/main/Documentation/SQLiteChangesetSyncDemo/SQLiteChangesetSyncDemo/Players/PlayerRepository.swift)
 
 ```
 return try changesetRepository.commit { db in
@@ -266,13 +270,15 @@ Root
                         |--- Merge #1 + #2 <-- HEAD (A,B)
 ```
 
-- *Merge All*: Repeatedly create merge commits for all branches into a single branch. Branches are defined as "leaf node" changesets that have no children. Merging does not apply the changes. To update to the newly created branch, run pull. _Note_: Like regulars commits, merge commits can be pushed and fetched. The difference between a merge commit and a regular commit is that a merge commit has two parents and and two binary blobs of the database modifications to apply depending on which parent a pull operation comes from.
+- *Merge All*: Repeatedly create merge commits for all branches into a single branch. Branches are defined as "leaf node" changesets that have no children. Merging does not apply the changes. To update to the newly created branch, run pull. _Note_: Like regulars commits, merge commits can be pushed and fetched. The difference between a merge commit and a regular commit is that a merge commit has two parents and two binary blobs of the database modifications to apply depending on which parent a pull operation comes from.
 - *Merge Conflicts*: Currently merge conflicts are detected, but ignored. A merge conflict is detected when attempting to apply a changeset, but the data under modification is different than when the changeset was created. The SQLite Session Extension has more details here:  [](https://www.sqlite.org/sessionintro.html#conflicts).
 
 # Future Exploration
-- **Performance**: Investigation the performance of this architecture on larger projects
-- **Schema Migrations**: There is currently no support for schema migrations
-- **Handling conflicts**: Better support for the application to handle merge conflicts
+- **Performance investigation**: Investigation the performance of this architecture on larger projects. Specifically the impact on database size and performance of merging in large repositories with many changesets
+- **Schema migrations**: There is currently no support for schema migrations
+- **Handling conflicts**: Better support for the application to handle merge conflicts. Currently merge conflicts are simply ignored, we should allow a applications to define a conflict handler.
+- **Remove dependency on GRDB**: Would allow package to be more universal. Currently GRDB is used to simplify access the database, but we could use lower-level `sqlite` functions instead.
+- **Implementation in other languages**: This concept could be implemented in other languages. Perhaps even an SQLite C-extension?
 
 # Contributing
 
