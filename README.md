@@ -82,6 +82,9 @@ Represents a changeset within the `ChangesetRepository` and backed by a `changes
   - `pushed`: `Bool` - A flag indicating whether the changeset has been pushed to a remote repository.
   - `meta`: `String` - A JSON string containing metadata about the changeset.
 
+- **Note:**
+  `Changeset` objects are created internally by `ChangesetRepository`. Except for the `pushed` and `meta` properties, all other properties should be considered as read-only and not modified.
+  
 ---
 
 ### `struct Head`
@@ -92,10 +95,7 @@ Represents the current "checked-out" head of the `ChangesetRepository`.
   - `uuid`: `String?` - The UUID of the current head changeset. `nil` indicates the root head.
 
 - **Note on Database Structure:**
-  This is an internal data structure and should not be manipulated by the application directoy. The `head` table in the database backing this struct is designed to contain only a single row. This row holds the UUID value of the current head of the repository, representing the latest state of the synchronized data. It's crucial to maintain this table with only one row to ensure the integrity and correct tracking of the repository's head state.
-
-
-
+  The `Head` object is used internally by `ChangesetRepository` and should not be modified. The `head` table in the database backing this struct is designed to contain only a single row. This row holds the UUID value of the current head of the repository, representing the latest state of the synchronized data. It's crucial to maintain this table with only one row to ensure the integrity and correct tracking of the repository's head state.
 
 ## `ChangesetRepository`
 
@@ -214,15 +214,17 @@ SQLiteChangesetSync uses this functionality to implement a version control-like 
 There is no explict branch operation. If each local database has the same synced set of changesets (by fetching and then pulling) before a commit then the local databases will be on the same "branch". A branch will occur when two different local databases both create a commit with the same parent. Some exapmles:
 
 - **Example 1**: No Branching
+  
 | Database A                | Database B        |
+| ------------------------- | ----------------- |
 | Commit Change #1          |                   |
 | Push Change #1            |                   |
 |                           | Fetch Change #1   |
-|                           | Pull              |
+|                           | Pull to Change #1 |
 |                           | Commit Change #2  |
 |                           | Push Change #2    |
 | Fetch Change #2           |                   |
-| Pull                      |                   |
+| Pull to Change #1         |                   |
 
 ```
 Root
@@ -233,10 +235,12 @@ Change #2 <-- HEAD (A,B)
 ```
 
 - **Example 2**: Branching
+  
 | Database A                | Database B        |
+| ------------------------- | ----------------- |
 | Commit Change #1          | Commit Change #2  |
 | Push Change #1            | Push Change #2    |
-| Fetch Change #2           | Fetch Change #1 |
+| Fetch Change #2           | Fetch Change #1   |
 
 ```
 Root
@@ -252,6 +256,7 @@ Continuing with Example 2 from above, we have implicitedly created a branch from
 
 To solve, this problem we need to merge the two branches. After merging, the repository will look like this:
 
+```
 Root
     |
     |--- Change #1 -----|
@@ -262,6 +267,7 @@ Root
 ```
 
 - *Merge All*: Repeatedly create merge commits for all branches into a single branch. Branches are defined as "leaf node" changesets that have no children. Merging does not apply the changes. To update to the newly created branch, run pull. _Note_: Like regulars commits, merge commits can be pushed and fetched. The difference between a merge commit and a regular commit is that a merge commit has two parents and and two binary blobs of the database modifications to apply depending on which parent a pull operation comes from.
+- *Merge Conflicts*: Currently merge conflicts are detected, but ignored. A merge conflict is detected when attempting to apply a changeset, but the data under modification is different than when the changeset was created. The SQLite Session Extension has more details here:  [](https://www.sqlite.org/sessionintro.html#conflicts).
 
 # Future Exploration
 - **Performance**: Investigation the performance of this architecture on larger projects
