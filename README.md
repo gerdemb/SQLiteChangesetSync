@@ -214,15 +214,17 @@ SQLiteChangesetSync uses this functionality to implement a version control-like 
 There is no explict branch operation. If each local database has the same synced set of changesets (by fetching and then pulling) before a commit then the local databases will be on the same "branch". A branch will occur when two different local databases both create a commit with the same parent. Some exapmles:
 
 - **Example 1**: No Branching
+  
 | Database A                | Database B        |
+| ------------------------- | ----------------- |
 | Commit Change #1          |                   |
 | Push Change #1            |                   |
 |                           | Fetch Change #1   |
-|                           | Pull              |
+|                           | Pull to Change #1 |
 |                           | Commit Change #2  |
 |                           | Push Change #2    |
 | Fetch Change #2           |                   |
-| Pull                      |                   |
+| Pull to Change #1         |                   |
 
 ```
 Root
@@ -233,10 +235,12 @@ Change #2 <-- HEAD (A,B)
 ```
 
 - **Example 2**: Branching
+  
 | Database A                | Database B        |
+| ------------------------- | ----------------- |
 | Commit Change #1          | Commit Change #2  |
 | Push Change #1            | Push Change #2    |
-| Fetch Change #2           | Fetch Change #1 |
+| Fetch Change #2           | Fetch Change #1   |
 
 ```
 Root
@@ -252,6 +256,7 @@ Continuing with Example 2 from above, we have implicitedly created a branch from
 
 To solve, this problem we need to merge the two branches. After merging, the repository will look like this:
 
+```
 Root
     |
     |--- Change #1 -----|
