@@ -278,6 +278,6 @@ This idea would not have been possible, without building on the incredible work 
 
 # Contact Information
 
-Github: [Github](https://github.com/gerdemb)
-Twitter: [Twitter](https://twitter.com/gerdemb)
+- Github: [Github](https://github.com/gerdemb)
+- Twitter: [Twitter](https://twitter.com/gerdemb)
 
