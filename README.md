@@ -68,13 +68,63 @@ return try changesetRepository.commit { db in
 }
 ```
 
+## `ChangesetRepository`
+
+### `init(_ dbWriter: some GRDB.DatabaseWriter) throws`
+
+Initializes a new instance of `ChangesetRepository` with the provided database writer.
+
+- **Parameters:**
+  - `dbWriter`: A `DatabaseWriter` instance (such as `DatabaseQueue` or `DatabasePool`) to be used for all database operations within the repository.
+- **Throws:** An error if the database migration fails.
+
+---
+
+### `func reset() throws`
+
+Resets the changeset repository. This function clears all changesets from the database and sets the head UUID to `nil`.
+
+- **Throws:** An error if the reset operation fails.
+
+---
+
+### `func commit<T>(meta: String = "{}", _ updates: (Database) throws -> T) throws -> T`
+
+Commits a set of updates to the database as a new changeset. The function captures changes made during the update block and stores them as a changeset in the database.
+
+- **Parameters:**
+  - `meta`: A JSON string containing metadata for the changeset. Defaults to an empty JSON object.
+  - `updates`: A closure that performs the desired updates on the database.
+- **Returns:** The result of the `updates` closure.
+- **Throws:** An error if the commit operation fails.
+
+---
+
+### `func pull() throws -> Changeset?`
+
+Applies all the child changesets from the current HEAD in the local repository in the order they were created.
+
+- **Returns:** The final `Changeset` applied, `nil` if no changesets were applied.
+- **Throws:** An error if the pull operation fails.
+
+---
+
+### `func mergeAll() throws`
+
+Merges all outstanding branches in the repository. This function finds pairs of leaf nodes (branches) and merges them, continuing until no mergeable pairs are left.
+
+- **Throws:** An error if the merge operation fails.
+
+---
+
+
+
 # How It Works
 
 Technical explanation of the underlying mechanisms
 Description of the SQLite Session Extension and changeset handling
 Flow diagrams or architecture charts (if applicable)
 
-# API Reference
 
 # Future Exploration
 - **Performance**: Investigation the performance of this architecture on larger projects
