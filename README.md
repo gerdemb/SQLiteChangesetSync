@@ -211,7 +211,7 @@ Flow diagrams or architecture charts (if applicable)
 
 # Contributing
 
-Comments,issues, pull requests, etc. are very welcome!
+Comments, issues, pull requests, etc. are very welcome!
 
 # Acknowledgements
 
@@ -219,6 +219,6 @@ This idea would not have been possible, without building on the incredible work 
 
 # Contact Information
 
-Github: [Github](https://github.com/gerdemb)
-Twitter: [Twitter](https://twitter.com/gerdemb)
+- Github: [Github](https://github.com/gerdemb)
+- Twitter: [Twitter](https://twitter.com/gerdemb)
 
