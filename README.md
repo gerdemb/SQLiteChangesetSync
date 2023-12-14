@@ -67,8 +67,38 @@ return try changesetRepository.commit { db in
     try player.inserted(db)
 }
 ```
+## Data structs
+
+### `struct Changeset`
+
+Represents a changeset within the `ChangesetRepository` and backed by a `changeset` table in the database.
+
+- **Properties:**
+  - `uuid`: `String` - A unique identifier for the changeset.
+  - `parent_uuid`: `String?` - The UUID of the parent changeset, if any.
+  - `parent_changeset`: `Data?` - Binary changeset data.
+  - `merge_uuid`: `String?` - The UUID of the merge parent for merge commits.
+  - `merge_changeset`: `Data?` - Binary changeset data for merge commits.
+  - `pushed`: `Bool` - A flag indicating whether the changeset has been pushed to a remote repository.
+  - `meta`: `String` - A JSON string containing metadata about the changeset.
+
+---
+
+### `struct Head`
+
+Represents the current "checked-out" head of the `ChangesetRepository`.
+
+- **Properties:**
+  - `uuid`: `String?` - The UUID of the current head changeset. `nil` indicates the root head.
+
+- **Note on Database Structure:**
+  This is an internal data structure and should not be manipulated by the application directoy. The `head` table in the database backing this struct is designed to contain only a single row. This row holds the UUID value of the current head of the repository, representing the latest state of the synchronized data. It's crucial to maintain this table with only one row to ensure the integrity and correct tracking of the repository's head state.
+
+
+
 
 ## `ChangesetRepository`
+
 
 ### `init(_ dbWriter: some GRDB.DatabaseWriter) throws`
 
@@ -115,7 +145,56 @@ Merges all outstanding branches in the repository. This function finds pairs of 
 
 - **Throws:** An error if the merge operation fails.
 
+
+## CloudKitManager
+
+### `init(_ dbWriter: some GRDB.DatabaseWriter, config: CloudKitManagerConfig)`
+
+Initializes a new instance of `CloudKitManager` for managing changesets in a CloudKit environment.
+
+- **Parameters:**
+  - `dbWriter`: A `DatabaseWriter` instance used for all database operations.
+  - `config`: Configuration settings for CloudKit, including the database, zone, and subscription ID.
+
 ---
+
+### `func setup() async throws`
+
+Asynchronously sets up the CloudKit environment. This includes loading the last change token, creating a record zone if needed, and setting up a subscription.
+
+- **Throws:** An error if the setup operation fails.
+
+---
+
+### `func reset() async throws`
+
+Asynchronously resets the CloudKit environment. This deletes the record zone and subscription in CloudKit, resets user defaults related to CloudKit setup, and then re-runs the setup process.
+
+- **Throws:** An error if the reset operation fails.
+
+---
+
+### `func resetLastChangeToken()`
+
+Resets the last change token by removing it from user defaults and then reloading it.
+
+---
+
+### `func push() async throws -> [Changeset]`
+
+Asynchronously pushes local changesets to CloudKit. This function selects changesets that haven't been pushed, saves them to CloudKit, and marks them as pushed in the local database.
+
+- **Returns:** An array of `Changeset` objects that were pushed.
+- **Throws:** An error if the push operation fails.
+
+---
+
+### `func fetch() async throws -> [Changeset]`
+
+Asynchronously fetches changesets from CloudKit. This function retrieves new changesets based on the last change token, adds new changesets to the local database, and updates the change token.
+
+- **Returns:** An array of new `Changeset` objects fetched from CloudKit.
+- **Throws:** An error if the fetch operation fails.
 
 
 
