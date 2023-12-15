@@ -1,8 +1,8 @@
 # Overview
 
-SQLiteChangesetSync is a Swift package that enables the synchronization of SQLite databases across multiple devices by leveraging the [SQLite Session Extension](https://www.sqlite.org/sessionintro.html). It uses an offline-first approach, allowing changesets to be captured as binary data blobs in a table within the SQLite database. After being committed, these changesets can be pushed to, and fetched from a remote repository such as a CloudKit database, and then merged into the local databases. These actions are modeled after git operations, but adapted to the context of database synchronization. The package is designed for scenarios requiring consistent data across different instances, particularly useful in environments with intermittent network connectivity.
+SQLiteChangesetSync is a Swift package that allows for the offline-first synchronization of SQLite databases across multiple devices with intermittent network connectivity. It works by leveraging the [SQLite Session Extension](https://www.sqlite.org/sessionintro.html) to capture changesets as they are "committed" to a local database. Similar to git, these changesets can then be "pushed" to a remote repository such as a CloudKit database. Other devices can then "fetch" these changesets and apply them their local database to keep data consistent across different databases.
 
-_Note_: This package is an experimental concept that I've developed and am excited to share with the community. While it functions well on my machine, your experience may vary! 😄 I'm very interested in receiving feedback about the idea and its implementation. Insights from anyone who tries to use it would be incredibly valuable and greatly appreciated.
+_Note_: This package is an experimental concept that I've developed and wanted to share. While it functions well on my machine, your experience may vary! 😄 I'm very interested in receiving feedback about the idea and its implementation. Insights from anyone who tries to use it would be incredibly valuable and greatly appreciated.
 
 # Advantages of SQLiteChangesetSync Approach
 
@@ -19,7 +19,7 @@ _Note_: This package is an experimental concept that I've developed and am excit
 
 ![Screenshot](screenshot.png "Screenshot")
 
-A demo iOS app `SQLiteChangesetSyncDemo` is included in the package. To enable CloudKit support, edit the `CloudKitConfig` settings in `SQLiteChangesetSyncDemoApp.swift`. The app UI is basic, so please watch the app log to see the results of each operation. There are two identical targets in the project `SQLiteChangesetSyncDemoApp` and `SQLiteChangesetSyncDemoAppCopy`. It is possible to run each target on a separate simulator and experiment with syncing data between the two instances.
+A demo iOS app `SQLiteChangesetSyncDemo` is included in the package. To enable CloudKit support, edit the `CloudKitConfig` settings in `SQLiteChangesetSyncDemoApp.swift`. The app UI is basic, so please watch the app log to see the results of each operation. Setting the environment variable `SQL_TRACE` will log all executed SQL statements. There are two identical targets in the project `SQLiteChangesetSyncDemoApp` and `SQLiteChangesetSyncDemoAppCopy`. It is possible to run each target on a separate simulator and experiment with syncing data between the two instances.
 
 The demo depends on the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQuery](https://github.com/groue/GRDBQuery) packages.
 
@@ -40,11 +40,11 @@ The demo depends on the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQue
 
 ## Package Dependencies
 
-- [GRDB](https://github.com/groue/GRDB.swift) For ease of implementation, `GRDB` is used for database operations. _NOTE_: `GRDB` is not a strict requirement and a version of the package could be developed without depending on `GRDB` using low-level SQLite functions instead.
+- [GRDB](https://github.com/groue/GRDB.swift) for accessing the SQLite database.
 
 ## Integration
 
-The best place to understand how to integrate the package is by reviewing the included demo app `SQLiteChangesetSyncDemo`. To get started, add the following to your APP init:
+The best place to understand how to integrate the package is by reviewing the included demo app [`SQLiteChangesetSyncDemo`](https://github.com/gerdemb/SQLiteChangesetSync/tree/main/Documentation/SQLiteChangesetSyncDemo). To get started, add the following to your APP init:
 
 [SQLiteChangesetSyncDemoApp.swift](https://github.com/gerdemb/SQLiteChangesetSync/blob/main/Documentation/SQLiteChangesetSyncDemo/SQLiteChangesetSyncDemo/SQLiteChangesetSyncDemoApp.swift)
 
@@ -205,14 +205,12 @@ Asynchronously fetches changesets from CloudKit. This function retrieves new cha
 # How It Works
 
 ## Underlying Mechanisms
-SQLiteChangesetSync is built upon the foundation of the [SQLite Session Extension](https://www.sqlite.org/sessionintro.html), which is a powerful tool for tracking changes in an SQLite database. The extension captures modifications (inserts, updates, deletes) made to the database tables and records them as changesets. These changesets are essentially a collection of the changes made during a database session. `SQLiteChangesetSync` takes these changesets and stores them in a specialized `changeset` table as a binary representation of the database modifications.
-
-SQLiteChangesetSync uses this functionality to implement a version control-like system for the database. Each changeset acts like a 'commit', capturing a modification of the database at a certain point in time. These changesets can then be used to synchronize the state of the database across different devices or platforms.
+SQLiteChangesetSync is built upon the foundation of the [SQLite Session Extension](https://www.sqlite.org/sessionintro.html), which is a powerful tool for tracking changes in SQLite databases. The extension captures modifications (inserts, updates, deletes) made to the database tables and creates a changeset. `SQLiteChangesetSync` takes these changesets and stores them as binary data in the `changeset` table to record all database modifications. Like a git repository, these saved changesets create a "commit graph" of changes to the database which SQLiteChangesetSync uses to implement a git-like version control system for the database. 
 
 ## Synchronization Process
 - *Commit*: When a database is modified, the Session Extension captures these changes, and SQLiteChangesetSync commits them as a new entry in the 'changeset' table with a reference to the UUID of the parent commit.
-- *Push and Fetch*: These changesets can be pushed to a remote repository (like a server or cloud service). Similarly, changesets from other sources can be fetched and stored locally. Like git, changesets have unique UUID values and once created are read-only simplifying the syncing process with a remote repository.
-- *Pull*: The local database can then 'pull' these changesets, applying them to reach the latest state. 
+- *Push and Fetch*: These changesets can be pushed to a remote repository (a remote database or server like CloudKit). After being pushed, other clients can fetch the same changesets and store them in their local repository. Like git, changesets have unique UUID values and once created are read-only simplifying the syncing process with a remote repository.
+- *Pull*: The local database can then 'pull' these changesets, applying them to the application data to reach the latest state. 
 
 ## Branches
 There is no explict branch operation. If each local database has the same synced set of changesets (by fetching and then pulling) before a commit then the local databases will be on the same "branch". A branch will occur when two different local databases both create a commit with the same parent. Some exapmles:
@@ -270,8 +268,8 @@ Root
                         |--- Merge #1 + #2 <-- HEAD (A,B)
 ```
 
-- *Merge All*: Repeatedly create merge commits for all branches into a single branch. Branches are defined as "leaf node" changesets that have no children. Merging does not apply the changes. To update to the newly created branch, run pull. _Note_: Like regulars commits, merge commits can be pushed and fetched. The difference between a merge commit and a regular commit is that a merge commit has two parents and two binary blobs of the database modifications to apply depending on which parent a pull operation comes from.
-- *Merge Conflicts*: Currently merge conflicts are detected, but ignored. A merge conflict is detected when attempting to apply a changeset, but the data under modification is different than when the changeset was created. The SQLite Session Extension has more details here:  [](https://www.sqlite.org/sessionintro.html#conflicts).
+- *Merge All*: Repeatedly create merge commits for all branches into a single branch. Branches are defined as "leaf node" changesets that have no children. Merging does not apply the changes. To update to the newly created branch, run pull. _Note_: Like regular commits, merge commits can be pushed and fetched. The difference between a merge commit and a regular commit is that a merge commit has two parents and two sets of binary changeset data to apply depending on which parent a pull operation comes from.
+- *Merge Conflicts*: Currently merge conflicts are detected, but ignored. A merge conflict is detected not when the branches are merged, but rather when attempting to apply (pull) a changeset. A conflict will occur when applying a changeset if the data under modification is different than when the changeset itself was created. For example, if two different changesets both try to update the same row with different values. The SQLite Session Extension has a complete set of examples here:  [](https://www.sqlite.org/sessionintro.html#conflicts).
 
 # Future Exploration
 - **Performance investigation**: Investigation the performance of this architecture on larger projects. Specifically the impact on database size and performance of merging in large repositories with many changesets
@@ -286,7 +284,9 @@ Root
 
 # Acknowledgements
 
-This idea would not have been possible, without building on the incredible work done in the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQuery](https://github.com/groue/GRDBQuery) packages. Special thanks to _Gwendal Roué_ ([@groue](https://github.com/groue)) for his work on GRDB and personal assistance with an issue I was having with GRDB that eventually turned into a new released GRDB feature [Problem with ValueObservation when changes are made on the raw SQLite connection using the C API](https://github.com/groue/GRDB.swift/discussions/1457)
+This idea would not have been possible, without building on the incredible work done in the [GRDB](https://github.com/groue/GRDB.swift) and [GRDBQuery](https://github.com/groue/GRDBQuery) packages. Special thanks to _Gwendal Roué_ ([@groue](https://github.com/groue)) for his work on GRDB and personal assistance with an issue I was having with GRDB that eventually turned into a new released GRDB feature [Problem with ValueObservation when changes are made on the raw SQLite connection using the C API](https://github.com/groue/GRDB.swift/discussions/1457) that is used in the demo app.
+
+The included demo app is based on the [QueryDemo](https://github.com/groue/GRDBQuery/tree/main/Documentation/QueryDemo) app included in GRDBQuery.
 
 # Contact Information
 
